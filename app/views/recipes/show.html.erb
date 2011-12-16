@@ -1,0 +1,45 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Food measure:</b>
+  <%= @recipe.food_measure_id %>
+</p>
+
+<p>
+  <b>Many ppl:</b>
+  <%= @recipe.many_ppl %>
+</p>
+
+<p>
+  <b>Title:</b>
+  <%= @recipe.title %>
+</p>
+
+<p>
+  <b>Difficulty:</b>
+  <%= @recipe.difficulty %>
+</p>
+
+<p>
+  <b>Time:</b>
+  <%= @recipe.time %>
+</p>
+
+<p>
+  <b>Category:</b>
+  <%= @recipe.category_id %>
+</p>
+
+<p>
+  <b>Text:</b>
+  <%= @recipe.text %>
+</p>
+
+<p>
+  <b>Extra content:</b>
+  <%= @recipe.extra_content %>
+</p>
+
+
+<%= link_to 'Edit', edit_recipe_path(@recipe) %> |
+<%= link_to 'Back', recipes_path %>

@@ -1,0 +1,23 @@
+<h1>Listing food_categories</h1>
+
+<table>
+  <tr>
+    <th>Meal type</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @food_categories.each do |food_category| %>
+  <tr>
+    <td><%= food_category.meal_type %></td>
+    <td><%= link_to 'Show', food_category %></td>
+    <td><%= link_to 'Edit', edit_food_category_path(food_category) %></td>
+    <td><%= link_to 'Destroy', food_category, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Food category', new_food_category_path %>
