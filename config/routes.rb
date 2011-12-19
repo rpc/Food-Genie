@@ -1,10 +1,11 @@
 Foodgenie::Application.routes.draw do
+  get "food_genie/index"
+  get "food_genie/search"
+
+
   resources :food_measures
-
   resources :food_categories
-
   resources :recipes
-
   resources :food_items
 
   # The priority is based upon order of creation:
@@ -56,7 +57,7 @@ Foodgenie::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  # root :to => 'welcome#index'
+  root :to => 'food_genie#index'
 
   # See how all your routes lay out with "rake routes"
 
