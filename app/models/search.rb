@@ -11,7 +11,8 @@ class Search
   end
   
   def parse_entry_string entry_string
-      entry_array = entry_string.gsub(/[^A-Za-z\+\-]/, ' ').split(' ').delete_if {|word| word.end_with?("-") or  word.end_with?("+") }
+     # entry_array = entry_string.gsub(/[^A-Za-z\+\-]/, ' ').split(' ').delete_if {|word| word.end_with?("-") or  word.end_with?("+") }
+     entry_array = entry_string.gsub(/[^A-Za-z]/, ' ').split(' ')
                                                                                  
   end
   

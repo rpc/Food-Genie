@@ -1,0 +1,25 @@
+<h1>Listing ingredients</h1>
+
+<table>
+  <tr>
+    <th>Food item</th>
+    <th>Quantity</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @ingredients.each do |ingredient| %>
+  <tr>
+    <td><%= ingredient.food_item.name %></td>
+    <td><%= ingredient.quantity %></td>
+    <td><%= link_to 'Show', ingredient %></td>
+    <td><%= link_to 'Edit', edit_ingredient_path(ingredient) %></td>
+    <td><%= link_to 'Destroy', ingredient, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Food measure', new_ingredient_path %>

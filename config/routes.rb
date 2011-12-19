@@ -3,8 +3,8 @@ Foodgenie::Application.routes.draw do
   get "food_genie/search"
 
 
-  resources :food_measures
-  resources :food_categories
+  resources :ingredients
+  resources :categories
   resources :recipes
   resources :food_items
 

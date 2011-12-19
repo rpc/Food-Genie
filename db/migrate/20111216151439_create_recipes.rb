@@ -1,7 +1,6 @@
 class CreateRecipes < ActiveRecord::Migration
   def change
     create_table :recipes do |t|
-      t.integer :food_measure_id
       t.integer :many_ppl
       t.string :title
       t.string :difficulty
