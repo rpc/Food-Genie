@@ -1,7 +1,6 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 one:
-  food_measure_id: 1
   many_ppl: 1
   title: MyString
   difficulty: MyString
@@ -11,7 +10,6 @@ one:
   extra_content: 
 
 two:
-  food_measure_id: 1
   many_ppl: 1
   title: MyString
   difficulty: MyString
