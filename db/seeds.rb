@@ -7,26 +7,26 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 # Doce
-r1fi1 = FoodItem.create(:name => "Arroz")
-r1fi2 = FoodItem.create(:name => "Leite")
-r1fi3 = FoodItem.create(:name => "Canela")
-r1fi4 = FoodItem.create(:name => "Limao")
-r1fi5 = FoodItem.create(:name => "Agua")
-r1fi6 = FoodItem.create(:name => "Acucar")
+r1fi1 = FoodItem.create(:name => "arroz")
+r1fi2 = FoodItem.create(:name => "leite")
+r1fi3 = FoodItem.create(:name => "canela")
+r1fi4 = FoodItem.create(:name => "limao")
+r1fi5 = FoodItem.create(:name => "agua")
+r1fi6 = FoodItem.create(:name => "acucar")
 
 # Meal
-r2fi1 = FoodItem.create(:name => "Margarina")
-r2fi2 = FoodItem.create(:name => "Carne")
-r2fi3 = FoodItem.create(:name => "Azeite")
-r2fi4 = FoodItem.create(:name => "Alho")
-r2fi5 = FoodItem.create(:name => "Cebola")
-r2fi6 = FoodItem.create(:name => "Feijao")
+r2fi1 = FoodItem.create(:name => "margarina")
+r2fi2 = FoodItem.create(:name => "carne")
+r2fi3 = FoodItem.create(:name => "azeite")
+r2fi4 = FoodItem.create(:name => "alho")
+r2fi5 = FoodItem.create(:name => "cebola")
+r2fi6 = FoodItem.create(:name => "feijao")
 
 # Sopa
-r3fi1 = FoodItem.create(:name => "Tomate")
-r3fi2 = FoodItem.create(:name => "Batata")
-r3fi3 = FoodItem.create(:name => "Coentros")
-r3fi4 = FoodItem.create(:name => "Ovos")
+r3fi1 = FoodItem.create(:name => "tomate")
+r3fi2 = FoodItem.create(:name => "batata")
+r3fi3 = FoodItem.create(:name => "coentros")
+r3fi4 = FoodItem.create(:name => "ovo")
 
 ###################
 # Categoria

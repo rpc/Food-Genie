@@ -1,9 +1,17 @@
 <h1>Welcome to the AMAZING Food-Genie</h1>
 <%= form_tag food_genie_search_path, :method => 'get' do %>
+
+  <%= hidden_field :search_options, :dificulty, :value => 1 %>
+  <%#= hidden_field :search_options, :time, :value => 1 %>
+  <%= hidden_field :search_options, :category, :value => 1 %>
+  
   <p>
-    <%= text_field_tag :search, params[:search] %>
+    <%= text_field_tag :search_field, params[:search] %>
     <%= submit_tag "Search", :name => nil %>
   </p>
+  
+
 <% end %>
+
 
 
