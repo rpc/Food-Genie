@@ -16,7 +16,8 @@ class FoodGenieController < ApplicationController
     
     @result_recipe = "my recp"
 
-    search = Search.new(params[:search_field], params[:search_options])
+    search = Search.new(params[:search_options])
+    search.preform_search(params[:search_field])
     search.valid?
     flash[:errors] = search.errors
     flash[:notice] = search.info

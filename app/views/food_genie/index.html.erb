@@ -1,9 +1,23 @@
 <h1>Welcome to the AMAZING Food-Genie</h1>
 <%= form_tag food_genie_search_path, :method => 'get' do %>
 
-  <%= hidden_field :search_options, :dificulty, :value => 1 %>
-  <%#= hidden_field :search_options, :time, :value => 1 %>
-  <%= hidden_field :search_options, :category, :value => 1 %>
+<div>
+  easy<%= radio_button :search_options, :difficulty, 1, :checked => true%>
+  medium<%= radio_button :search_options, :difficulty, 2 %>
+  hard<%= radio_button :search_options, :difficulty, 3 %>
+</div>
+
+<div>
+  dessert<%= radio_button :search_options, :category, 1 %>
+  dish<%= radio_button :search_options, :category, 2, :checked => true %>
+  entrance<%= radio_button :search_options, :category, 3 %>
+</div>
+
+<div>
+  short<%= radio_button :search_options, :time, 1 %>
+  medium<%= radio_button :search_options, :time, 2, :checked => true %>
+  long<%= radio_button :search_options, :time, 3 %>
+</div>
   
   <p>
     <%= text_field_tag :search_field, params[:search] %>
