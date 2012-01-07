@@ -1,0 +1,27 @@
+<h1>Blender#blend</h1>
+<p>Will it blend ?</p>
+
+
+
+<%= form_tag blender_blend_path, :method => 'get' do %>
+
+<div>
+  <label>Recipe title</label>
+  <%= text_field :blender, :recipe_title %>
+</div>
+
+<div>
+  <label>Ingredients</label>
+  <%= text_area :blender, :blending_ingredients, {:cols => 60, :rows => 10} %>
+</div>
+<div>
+  <label>Text</label>
+  <%= text_area :blender, :blending_text, {:cols => 60, :rows => 10} %>
+</div>
+
+
+<%= submit_tag "Blend!", :name => "blend" %>
+  
+
+<% end %>
+
