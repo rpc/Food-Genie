@@ -4,6 +4,7 @@ class Blender
   include ActiveModel::Validations
   
   STOP_WORDS = [" de "," com "]
+  MEASURE_WORDS = ["colheres","pacote","quarts","teaspoon","cups","tablespoons"]
   PLAUSIBLE_MEASURE_SIZE = 3
   
   attr_accessor :blending_text, :blending_ingredients
@@ -13,63 +14,98 @@ class Blender
   def initialize(blending_params)
     self.blending_text = blending_params[:blending_text]
     self.blending_ingredients = blending_params[:blending_ingredients]
+    
   end
   
   def blend
-    puts "entering: #{blending_ingredients}"
-    debugger
-    puts "ex: #{blending_ingredients}"    
+    ok_count = 0
+    nok_count = 0
+    Rails.logger.debug "== Blender::blend"
+    unless self.blending_ingredients.blank?
+      blending_ingredients.split("\n").each do |ingredient|
+        parse_ingredients(ingredient) ? ok_count += 1 : nok_count += 1
+        Rails.logger.debug "\n"
+      end
+    end
+    Rails.logger.debug "= Result: #{ok_count}/#{blending_ingredients.split("\n").count}"    
   end
   
   def parse_ingredients ingredient_text
   
+    Rails.logger.debug "== Blender::parse_ingredients"
+    #Rails.logger.debug "= ingredient_text: #{ingredient_text}"
+   
     # Removes SLASH "-"
     ingredient_text.gsub!("-","")
     
     # Removes Complements
     ingredient_text.gsub!(/\b(#{STOP_WORDS.join('|')})\b/mi, ' ')
     
+    is_valid, measure, quantity = get_measure_and_quantity ingredient_text
+    
+    return is_valid
     
     
   end
   
-  def self.get_quantity ingredient_text
+  def get_measure_and_quantity ingredient_text
+  
+    Rails.logger.debug "== Blender::get_measure_and_quantity"
+    Rails.logger.debug "= ingredient_text: #{ingredient_text}"
+    
     quantity = nil
     measure = nil
-    is_valid = false
-    if self.has_any_number?(ingredient_text)  
-      split_string = ingredient_text.split(" ") # 4 OR 4KG
+    is_valid = false    
 
+    if has_any_number?(ingredient_text)  
+      split_string = ingredient_text.split(" ") # 4 OR 4KG
       
-      # metodo para ver se tem algum numero
-      
+      # metodo para ver se tem algum numero      
       first_token = split_string.first
       second_token = split_string.second
       
-      if self.is_digit?(first_token) # Then its 4
-        quantity = first_token
-        measure = second_token
-        is_valid = true unless (measure.size > PLAUSIBLE_MEASURE_SIZE)
-      else # its 4KG needs to get the quantity
-      debugger
-        quantity = first_token.gsub(/[^0-9]/, '')
-        measure = first_token.gsub(/[^A-Za-z]/, '')
-        is_valid = true unless (measure.size > PLAUSIBLE_MEASURE_SIZE)
-      end      
-    end
+      # Could be: 4 KG; 4KG; 1/4 KG; 2 1/5 KG      
+      if( is_digit?(first_token) && !has_a_slash?(first_token) ) # 4 KG or 2 1/5 Kg
+        if( has_a_slash?(second_token) ) # 2 1/5 KG
+          quantity = first_token.concat(" "+second_token)
+          third_token = split_string.third
+          measure = third_token unless (third_token.size > PLAUSIBLE_MEASURE_SIZE) && (!MEASURE_WORDS.include?(third_token))
+          is_valid = true
+        else  # its really 4 KG
+          quantity = first_token
+          measure = second_token unless (second_token.size > PLAUSIBLE_MEASURE_SIZE) && (!MEASURE_WORDS.include?(second_token))
+          is_valid = true     
+        end      
+      else # Its stuck together or has slash (4Kg or 1/4 KG)
+        if(has_a_slash?(first_token) && !is_digit(second_token) ) # its 1/4 KG
+          quantity = first_token
+          measure = second_token unless (second_token.size > PLAUSIBLE_MEASURE_SIZE) && (!MEASURE_WORDS.include?(second_token))
+          is_valid = true
+        else # Its stuck , 4Kg
+          quantity = first_token.gsub(/[^0-9]/, '')
+          temp_measure = first_token.gsub(/[^A-Za-z]/, '')
+          measure = temp_measure unless (first_token.size > PLAUSIBLE_MEASURE_SIZE) && (!MEASURE_WORDS.include?(temp_measure))
+          is_valid = true
+        end     
+      end 
     
+    end
     is_valid ? output = "[Seem Legit]: Quantity: #{quantity} - Measure: #{measure}" : output = "The ingredient does not have quantity"
-    puts output
-    return is_valid
+    Rails.logger.debug "#{output}"
+    return is_valid, measure, quantity
   end
   
   #private 
-  def self.is_digit? str
+  def is_digit? str
     begin Float(str) ; true end rescue false  
   end
   
-  def self.has_any_number? str
+  def has_any_number? str
     !(str =~ /\d/).nil?
+  end
+  
+  def has_a_slash? str
+    str.include?("/")
   end
   
 
