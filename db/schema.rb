@@ -22,7 +22,7 @@ ActiveRecord::Schema.define(:version => 20111216151615) do
   create_table "food_items", :force => true do |t|
     t.string   "name"
     t.decimal  "price"
-    t.boolean  "certified"
+    t.boolean  "certified",  :default => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

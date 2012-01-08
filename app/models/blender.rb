@@ -13,23 +13,30 @@ class Blender
   
   def initialize(blending_params)
     self.blending_text = blending_params[:blending_text]
-    self.blending_ingredients = blending_params[:blending_ingredients]
-    
+    self.blending_ingredients = blending_params[:blending_ingredients]    
   end
   
   def blend
     ok_count = 0
+    ingredient_list = []
+    
+    recipe = Recipe.create(:many_ppl => 1, :title => "test", :difficulty => "easy", :time => 1, :category_id => 1, :text => self.blending_text, :approved => false)
+   
+
+    
     Rails.logger.debug "== Blender::blend"
     unless self.blending_ingredients.blank?
       blending_ingredients.split("\n").each do |ingredient|
-        parse_ingredients(ingredient) ? ok_count += 1
+        if parse_ingredients(ingredient, recipe) 
+          ok_count += 1 
+        end
         Rails.logger.debug "\n"
       end
     end
     Rails.logger.debug "= Result: #{ok_count}/#{blending_ingredients.split("\n").count}"    
   end
   
-  def parse_ingredients ingredient_text
+  def parse_ingredients ingredient_text, recipe    
   
     Rails.logger.debug "== Blender::parse_ingredients"
     #Rails.logger.debug "= ingredient_text: #{ingredient_text}"
@@ -41,9 +48,24 @@ class Blender
     ingredient_text.gsub!(/\b(#{STOP_WORDS.join('|')})\b/mi, ' ')
     
     is_valid, measure, quantity = get_measure_and_quantity ingredient_text
+
+    if is_valid
     
-    return is_valid
+      # TODO: Tudo no mesmo GSUB
+      ingredient_text.gsub!("#{measure}","")
+      ingredient_text.gsub!("#{quantity}","")
+      
+      # Removes all unecessary spaces
+      food_item_name = ingredient_text.split(" ").join(" ")
+      
+      Rails.logger.debug "Ingredient: #{ingredient_text}"
+      
+      f_item = FoodItem.create(:name => food_item_name, :price => nil, :certified => false)
+      Ingredient.create(:food_item_id => f_item.id, :quantity => quantity, :measure => measure, :recipe_id => recipe.id)
+      
+    end
     
+    return is_valid    
     
   end
   
