@@ -19,11 +19,10 @@ class Blender
   
   def blend
     ok_count = 0
-    nok_count = 0
     Rails.logger.debug "== Blender::blend"
     unless self.blending_ingredients.blank?
       blending_ingredients.split("\n").each do |ingredient|
-        parse_ingredients(ingredient) ? ok_count += 1 : nok_count += 1
+        parse_ingredients(ingredient) ? ok_count += 1
         Rails.logger.debug "\n"
       end
     end
@@ -35,7 +34,7 @@ class Blender
     Rails.logger.debug "== Blender::parse_ingredients"
     #Rails.logger.debug "= ingredient_text: #{ingredient_text}"
    
-    # Removes SLASH "-"
+    # Removes MINUS "-"
     ingredient_text.gsub!("-","")
     
     # Removes Complements
@@ -71,7 +70,7 @@ class Blender
           third_token = split_string.third
           measure = third_token unless (third_token.size > PLAUSIBLE_MEASURE_SIZE) && (!MEASURE_WORDS.include?(third_token))
           is_valid = true
-        else  # its really 4 KG
+        else  # its 4 KG
           quantity = first_token
           measure = second_token unless (second_token.size > PLAUSIBLE_MEASURE_SIZE) && (!MEASURE_WORDS.include?(second_token))
           is_valid = true     

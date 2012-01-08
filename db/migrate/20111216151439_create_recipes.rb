@@ -7,6 +7,7 @@ class CreateRecipes < ActiveRecord::Migration
       t.integer :time
       t.integer :category_id
       t.string :text
+      t.boolean :approved
       t.binary :extra_content
 
       t.timestamps

@@ -21,13 +21,16 @@ ActiveRecord::Schema.define(:version => 20111216151615) do
 
   create_table "food_items", :force => true do |t|
     t.string   "name"
+    t.decimal  "price"
+    t.boolean  "certified"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "ingredients", :force => true do |t|
     t.integer  "food_item_id"
-    t.integer  "quantity"
+    t.string   "quantity"
+    t.string   "measure"
     t.integer  "recipe_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -40,6 +43,7 @@ ActiveRecord::Schema.define(:version => 20111216151615) do
     t.integer  "time"
     t.integer  "category_id"
     t.string   "text"
+    t.boolean  "approved"
     t.binary   "extra_content"
     t.datetime "created_at"
     t.datetime "updated_at"
