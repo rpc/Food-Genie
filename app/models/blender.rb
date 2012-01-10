@@ -8,11 +8,15 @@ class Blender
   PLAUSIBLE_MEASURE_SIZE = 3
   
   attr_accessor :blending_text, :blending_ingredients
-  attr_accessor :difficulty, :time, :category
+  attr_accessor :difficulty, :time, :category, :many_ppl, :title
   
   validates_presence_of :difficulty, :message => "Please choose the difficulty"
   validates_presence_of :time, :message => "Choose the cooking time"
   validates_presence_of :category, :message => "Choose the food category"
+  validates_presence_of :many_ppl, :message => "Choose how many ppl"
+  validates_presence_of :title, :message => "Choose a title"
+  
+  validates_numericality_of :many_ppl
   
   validates_presence_of :blending_ingredients, :message => "Cant blend withou ingredients"
   validates_presence_of :blending_text, :message => "You must provide a text"
@@ -23,15 +27,21 @@ class Blender
     self.difficulty = blending_params[:difficulty]    
     self.time = blending_params[:time]    
     self.category = blending_params[:category]    
+    self.many_ppl = blending_params[:many_ppl]
+    self.title = blending_params[:title]
   end
   
   def blend
     ok_count = 0
     ingredient_list = []
     
-    recipe = Recipe.create(:many_ppl => 1, :title => "test", :difficulty => "easy", :time => 1, :category_id => 1, :text => self.blending_text, :approved => false)
-   
-
+    recipe = Recipe.create(:many_ppl => self.many_ppl,
+                           :title => self.title, 
+                           :difficulty => self.difficulty, 
+                           :time => self.time, 
+                           :category_id => self.category, 
+                           :text => self.blending_text, 
+                           :approved => false)
     
     Rails.logger.debug "== Blender::blend"
     unless self.blending_ingredients.blank?

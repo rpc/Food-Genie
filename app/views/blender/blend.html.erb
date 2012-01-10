@@ -36,6 +36,10 @@
   medium<%= radio_button :blender, :time, 2, :checked => true %>
   long<%= radio_button :blender, :time, 3 %>
 </div>
+<div>
+  <label>Many ppl?</label>
+  <%= text_field :blender, :many_ppl %>
+</div>
 
 
 <%= submit_tag "Blend!", :name => "blend" %>
