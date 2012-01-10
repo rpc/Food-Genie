@@ -8,12 +8,21 @@ class Blender
   PLAUSIBLE_MEASURE_SIZE = 3
   
   attr_accessor :blending_text, :blending_ingredients
+  attr_accessor :difficulty, :time, :category
+  
+  validates_presence_of :difficulty, :message => "Please choose the difficulty"
+  validates_presence_of :time, :message => "Choose the cooking time"
+  validates_presence_of :category, :message => "Choose the food category"
+  
   validates_presence_of :blending_ingredients, :message => "Cant blend withou ingredients"
   validates_presence_of :blending_text, :message => "You must provide a text"
   
   def initialize(blending_params)
     self.blending_text = blending_params[:blending_text]
     self.blending_ingredients = blending_params[:blending_ingredients]    
+    self.difficulty = blending_params[:difficulty]    
+    self.time = blending_params[:time]    
+    self.category = blending_params[:category]    
   end
   
   def blend
@@ -39,7 +48,6 @@ class Blender
   def parse_ingredients ingredient_line, recipe    
   
     Rails.logger.debug "== Blender::parse_ingredients"
-    #Rails.logger.debug "= ingredient_line: #{ingredient_line}"
    
     # Removes MINUS "-"
     ingredient_line.gsub!("-","")
@@ -48,27 +56,27 @@ class Blender
     ingredient_line.gsub!(/\b(#{STOP_WORDS.join('|')})\b/mi, ' ')
     
     is_valid, measure, quantity = get_measure_and_quantity ingredient_line
-
-    if is_valid
+    #if is_valid
+ 
+    ingredient_line_as_array = ingredient_line.split(" ")
+  
+    # TODO: Tudo no mesmo GSUB
+    ingredient_line_as_array.delete(measure)
+    ingredient_line_as_array.delete(quantity)
     
-      ingredient_line_as_array = ingredient_line.split(" ")
+    # Removes all unecessary spaces
+    food_item_name = ingredient_line_as_array.join(" ")
     
-      # TODO: Tudo no mesmo GSUB
-      ingredient_line_as_array.delete(measure)
-      ingredient_line_as_array.delete(quantity)
-      
-      # Removes all unecessary spaces
-      food_item_name = ingredient_line_as_array.join(" ")
-      
-      Rails.logger.debug "Ingredient: #{food_item_name}"
-      
-      #f_item = FoodItem.create(:name => food_item_name, :price => nil, :certified => false)
-      #Ingredient.create(:food_item_id => f_item.id, :quantity => quantity, :measure => measure, :recipe_id => recipe.id)
-      
-    end
+    Rails.logger.debug "Ingredient: #{food_item_name}"
     
-    return is_valid    
+    #f_item = FoodItem.create(:name => food_item_name, :price => nil, :certified => false)
+    #Ingredient.create(:food_item_id => f_item.id, :quantity => quantity, :measure => measure, :recipe_id => recipe.id)
     
+    return is_valid        
+  end
+  
+  def add_ingredient_to_recipe quantity, measure, food_item_name, recipe
+  
   end
   
   def get_measure_and_quantity ingredient_line

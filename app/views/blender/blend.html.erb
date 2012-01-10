@@ -19,6 +19,24 @@
   <%= text_area :blender, :blending_text, {:cols => 60, :rows => 10} %>
 </div>
 
+<div>
+  easy<%= radio_button :blender, :difficulty, 1, :checked => true%>
+  medium<%= radio_button :blender, :difficulty, 2 %>
+  hard<%= radio_button :blender, :difficulty, 3 %>
+</div>
+
+<div>
+  dessert<%= radio_button :blender, :category, 1 %>
+  dish<%= radio_button :blender, :category, 2, :checked => true %>
+  entrance<%= radio_button :blender, :category, 3 %>
+</div>
+
+<div>
+  short<%= radio_button :blender, :time, 1 %>
+  medium<%= radio_button :blender, :time, 2, :checked => true %>
+  long<%= radio_button :blender, :time, 3 %>
+</div>
+
 
 <%= submit_tag "Blend!", :name => "blend" %>
   
