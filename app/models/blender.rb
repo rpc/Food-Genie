@@ -36,32 +36,34 @@ class Blender
     Rails.logger.debug "= Result: #{ok_count}/#{blending_ingredients.split("\n").count}"    
   end
   
-  def parse_ingredients ingredient_text, recipe    
+  def parse_ingredients ingredient_line, recipe    
   
     Rails.logger.debug "== Blender::parse_ingredients"
-    #Rails.logger.debug "= ingredient_text: #{ingredient_text}"
+    #Rails.logger.debug "= ingredient_line: #{ingredient_line}"
    
     # Removes MINUS "-"
-    ingredient_text.gsub!("-","")
+    ingredient_line.gsub!("-","")
     
-    # Removes Complements
-    ingredient_text.gsub!(/\b(#{STOP_WORDS.join('|')})\b/mi, ' ')
+    # Removes Complementary Words
+    ingredient_line.gsub!(/\b(#{STOP_WORDS.join('|')})\b/mi, ' ')
     
-    is_valid, measure, quantity = get_measure_and_quantity ingredient_text
+    is_valid, measure, quantity = get_measure_and_quantity ingredient_line
 
     if is_valid
     
+      ingredient_line_as_array = ingredient_line.split(" ")
+    
       # TODO: Tudo no mesmo GSUB
-      ingredient_text.gsub!("#{measure}","")
-      ingredient_text.gsub!("#{quantity}","")
+      ingredient_line_as_array.delete(measure)
+      ingredient_line_as_array.delete(quantity)
       
       # Removes all unecessary spaces
-      food_item_name = ingredient_text.split(" ").join(" ")
+      food_item_name = ingredient_line_as_array.join(" ")
       
-      Rails.logger.debug "Ingredient: #{ingredient_text}"
+      Rails.logger.debug "Ingredient: #{food_item_name}"
       
-      f_item = FoodItem.create(:name => food_item_name, :price => nil, :certified => false)
-      Ingredient.create(:food_item_id => f_item.id, :quantity => quantity, :measure => measure, :recipe_id => recipe.id)
+      #f_item = FoodItem.create(:name => food_item_name, :price => nil, :certified => false)
+      #Ingredient.create(:food_item_id => f_item.id, :quantity => quantity, :measure => measure, :recipe_id => recipe.id)
       
     end
     
@@ -69,17 +71,17 @@ class Blender
     
   end
   
-  def get_measure_and_quantity ingredient_text
+  def get_measure_and_quantity ingredient_line
   
     Rails.logger.debug "== Blender::get_measure_and_quantity"
-    Rails.logger.debug "= ingredient_text: #{ingredient_text}"
+    Rails.logger.debug "= ingredient_line: #{ingredient_line}"
     
     quantity = nil
     measure = nil
     is_valid = false    
 
-    if has_any_number?(ingredient_text)  
-      split_string = ingredient_text.split(" ") # 4 OR 4KG
+    if has_any_number?(ingredient_line)  
+      split_string = ingredient_line.split(" ") # 4 OR 4KG
       
       # metodo para ver se tem algum numero      
       first_token = split_string.first
