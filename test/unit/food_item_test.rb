@@ -7,7 +7,8 @@ class FoodItemTest < ActiveSupport::TestCase
   
   test "name uniqueness" do
     FoodItem.create(:name => "fiambre")
-    FoodItem.create(:name => "fiambre")
-    assert FoodItem.count == 1
+    assert_no_difference 'FoodItem.count' do
+      FoodItem.create(:name => "fiambre")
+    end
   end
 end
