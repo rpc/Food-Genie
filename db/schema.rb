@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111216151615) do
+ActiveRecord::Schema.define(:version => 20120111134238) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
@@ -45,6 +45,18 @@ ActiveRecord::Schema.define(:version => 20111216151615) do
     t.string   "text"
     t.boolean  "approved"
     t.binary   "extra_content"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "watchers", :force => true do |t|
+    t.string   "query"
+    t.integer  "time"
+    t.string   "difficulty"
+    t.string   "category"
+    t.integer  "many_ppl"
+    t.string   "action"
+    t.string   "who"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

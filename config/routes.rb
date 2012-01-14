@@ -1,4 +1,6 @@
 Foodgenie::Application.routes.draw do
+  resources :watchers
+
   get "blender/blend"
   get "blender/index"
   match 'blender' => 'blender#index'

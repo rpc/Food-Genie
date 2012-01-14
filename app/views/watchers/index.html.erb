@@ -1,0 +1,33 @@
+<h1>Listing watchers</h1>
+
+<table>
+  <tr>
+    <th>Query</th>
+    <th>Time</th>
+    <th>Difficulty</th>
+    <th>Category</th>
+    <th>Many ppl</th>
+    <th>Who</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @watchers.each do |watcher| %>
+  <tr>
+    <td><%= watcher.query %></td>
+    <td><%= watcher.time %></td>
+    <td><%= watcher.difficulty %></td>
+    <td><%= watcher.category %></td>
+    <td><%= watcher.many_ppl %></td>
+    <td><%= watcher.who %></td>
+    <td><%= link_to 'Show', watcher %></td>
+    <td><%= link_to 'Edit', edit_watcher_path(watcher) %></td>
+    <td><%= link_to 'Destroy', watcher, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Watcher', new_watcher_path %>
