@@ -40,6 +40,19 @@
     <%= f.label :extra_content %><br />
     <%= f.text_field :extra_content %>
   </div>
+  
+  <table>
+  <% @recipe.ingredients.each do |ingredient| %>
+  <tr>
+    <td><%= ingredient.food_item.name %></td>
+    <td><%= ingredient.quantity %></td>
+    <td><%= link_to 'Show', ingredient %></td>
+    <td><%= link_to 'Edit', edit_ingredient_path(ingredient) %></td>
+    <td><%= link_to 'Destroy', ingredient, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+  
+<% end %>
+  </table>
   <div class="actions">
     <%= f.submit %>
   </div>

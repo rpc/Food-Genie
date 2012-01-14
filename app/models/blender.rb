@@ -16,7 +16,7 @@ class Blender
   validates_presence_of :many_ppl, :message => "Choose how many ppl"
   validates_presence_of :title, :message => "Choose a title"
   
-  validates_numericality_of :many_ppl
+  validates_numericality_of :many_ppl, :time
   
   validates_presence_of :blending_ingredients, :message => "Cant blend withou ingredients"
   validates_presence_of :blending_text, :message => "You must provide a text"
@@ -28,14 +28,14 @@ class Blender
     self.time = blending_params[:time]    
     self.category = blending_params[:category]    
     self.many_ppl = blending_params[:many_ppl]
-    self.title = blending_params[:title]
+    self.title = blending_params[:recipe_title]
   end
   
   def blend
     ok_count = 0
     ingredient_list = []
     
-    recipe = Recipe.create(:many_ppl => self.many_ppl,
+    recipe = Recipe.new(:many_ppl => self.many_ppl,
                            :title => self.title, 
                            :difficulty => self.difficulty, 
                            :time => self.time, 
@@ -52,6 +52,8 @@ class Blender
         Rails.logger.debug "\n"
       end
     end
+    
+    recipe.save! # BANG
     Rails.logger.debug "= Result: #{ok_count}/#{blending_ingredients.split("\n").count}"    
   end
   
@@ -79,8 +81,9 @@ class Blender
     
     Rails.logger.debug "Ingredient: #{food_item_name}"
     
-    #f_item = FoodItem.create(:name => food_item_name, :price => nil, :certified => false)
-    #Ingredient.create(:food_item_id => f_item.id, :quantity => quantity, :measure => measure, :recipe_id => recipe.id)
+    food_item = FoodItem.new(:name => food_item_name, :price => nil)
+    ingredient = Ingredient.new(:food_item => food_item, :quantity => quantity, :measure => measure, :recipe_id => recipe.id)
+    recipe.ingredients << ingredient    
     
     return is_valid        
   end

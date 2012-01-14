@@ -22,7 +22,7 @@
 
 <p>
   <b>Category:</b>
-  <%= @recipe.category_id %>
+  <%= @recipe.category.name %>
 </p>
 
 <p>
@@ -33,6 +33,13 @@
 <p>
   <b>Extra content:</b>
   <%= @recipe.extra_content %>
+</p>
+
+<p>
+  <b>Ingredients:</b>
+  <% @recipe.ingredients.each do |ingredient| %>
+    <p>- <%=  ingredient.quantity %> <%=  ingredient.measure %> <%= ingredient.food_item.name %></p>
+  <% end %>
 </p>
 
 

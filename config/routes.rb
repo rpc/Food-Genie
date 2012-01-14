@@ -1,5 +1,7 @@
 Foodgenie::Application.routes.draw do
   get "blender/blend"
+  get "blender/index"
+  match 'blender' => 'blender#index'
 
   get "food_genie/index"
   get "food_genie/search"
