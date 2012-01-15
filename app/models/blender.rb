@@ -2,7 +2,7 @@ class Blender < ActiveRecord::Base
   
   STOP_WORDS = [" de "," com "]
   MEASURE_WORDS = ["colheres","pacote","quarts","teaspoon","cups","tablespoons"]
-  PLAUSIBLE_MEASURE_SIZE = 4
+  PLAUSIBLE_MEASURE_SIZE = 5
   
   validates_presence_of :difficulty, :message => "Please choose the difficulty"
   validates_presence_of :time, :message => "Choose the cooking time"
@@ -97,6 +97,7 @@ class Blender < ActiveRecord::Base
         else # Its stuck , 4Kg
           quantity = first_token.gsub(/[^0-9]/, '')
           temp_measure = first_token.gsub(/[^A-Za-z]/, '')
+          ingredient << second_token
           measure = validate_measure temp_measure, ingredient          
         end      
       end 
