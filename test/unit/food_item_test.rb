@@ -11,4 +11,11 @@ class FoodItemTest < ActiveSupport::TestCase
       FoodItem.create(:name => "fiambre")
     end
   end
+  
+  test "must have a name" do
+    food_item = FoodItem.new
+    assert_no_difference 'FoodItem.count' do
+      food_item.save
+    end
+  end
 end
