@@ -8,7 +8,7 @@ class Ingredient < ActiveRecord::Base
     # If the inserted FoodItem already exists, gets that one.
     unless self.food_item.nil? || self.food_item.valid?
       f_item = FoodItem.find_by_name self.food_item.name  
-      self.food_item_id = f_item.id
+      self.food_item_id = f_item.id unless f_item.blank?
     end    
   end
 end

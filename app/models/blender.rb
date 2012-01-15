@@ -1,14 +1,8 @@
-class Blender
-
-  include ActiveModel
-  include ActiveModel::Validations
+class Blender < ActiveRecord::Base
   
   STOP_WORDS = [" de "," com "]
   MEASURE_WORDS = ["colheres","pacote","quarts","teaspoon","cups","tablespoons"]
-  PLAUSIBLE_MEASURE_SIZE = 3
-  
-  attr_accessor :blending_text, :blending_ingredients
-  attr_accessor :difficulty, :time, :category, :many_ppl, :title
+  PLAUSIBLE_MEASURE_SIZE = 4
   
   validates_presence_of :difficulty, :message => "Please choose the difficulty"
   validates_presence_of :time, :message => "Choose the cooking time"
@@ -20,16 +14,6 @@ class Blender
   
   validates_presence_of :blending_ingredients, :message => "Cant blend withou ingredients"
   validates_presence_of :blending_text, :message => "You must provide a text"
-  
-  def initialize(blending_params)
-    self.blending_text = blending_params[:blending_text]
-    self.blending_ingredients = blending_params[:blending_ingredients]    
-    self.difficulty = blending_params[:difficulty]    
-    self.time = blending_params[:time]    
-    self.category = blending_params[:category]    
-    self.many_ppl = blending_params[:many_ppl]
-    self.title = blending_params[:recipe_title]
-  end
   
   def blend
     #Rails.logger.debug "== Blender::blend"
@@ -54,34 +38,24 @@ class Blender
       end
     end
     
-    recipe.save! # BANG
     Rails.logger.debug "= Result: #{ok_count}/#{blending_ingredients.split("\n").count}"    
     return recipe
   end
   
-  def parse_ingredients ingredient_line, recipe    
-  
+  def parse_ingredients ingredient_line, recipe  
     Rails.logger.debug "== Blender::parse_ingredients"
    
     # Removes MINUS "-"
     ingredient_line.gsub!("-","")    
     # Removes Complementary Words
     ingredient_line.gsub!(/\b(#{STOP_WORDS.join('|')})\b/mi, ' ')
+    
     # Parses line
-    measure, quantity = get_measure_and_quantity ingredient_line
-   
-    # TODO: Tudo no mesmo GSUB
-    ingredient_line_as_array = ingredient_line.split(" ")
-    ingredient_line_as_array.delete(measure)
-    ingredient_line_as_array.delete(quantity)
+    measure, quantity, ingredient = get_measure_quantity_and_ingredient ingredient_line
+           
+    Rails.logger.debug "* Parsed Ingredient: Quant:(#{quantity}) Meas:(#{measure}) Name:(#{ingredient})"
     
-    # Removes all unecessary spaces
-    food_item_name = ingredient_line_as_array.join(" ")
-    
-    #Rails.logger.debug "* Parsed Ingredient: [Q]:#{quantity} [M]:#{measure} [N]:#{food_item_name}"
-    Rails.logger.debug "* Parsed Ingredient: Quant:(#{quantity}) Meas:(#{measure}) Name:(#{food_item_name})"
-    
-    add_ingredient_to_recipe quantity, measure, food_item_name, recipe 
+    add_ingredient_to_recipe quantity, measure, ingredient, recipe 
     return !measure.nil? && !quantity.nil?
   end
   
@@ -91,57 +65,68 @@ class Blender
     recipe.ingredients << ingredient
   end
   
-  def get_measure_and_quantity ingredient_line
+  def get_measure_quantity_and_ingredient ingredient_line
   
     Rails.logger.debug "** Blender::get_measure_and_quantity"
     Rails.logger.debug "* ingredient_line: #{ingredient_line}"
     
     quantity = nil
     measure = nil   
+    ingredient = []
+    split_string = ingredient_line.split(" ")
 
-    if has_any_number?(ingredient_line)  
-      split_string = ingredient_line.split(" ") # 4 OR 4KG
-      
+    if has_any_number?(ingredient_line) and  split_string.size > 1      
       # metodo para ver se tem algum numero      
-      first_token = split_string.first
-      second_token = split_string.second
+      first_token = split_string.shift
+      second_token = split_string.shift
       
       # Could be: 4 KG; 4KG; 1/4 KG; 2 1/5 KG      
       if( is_digit?(first_token) && !has_a_slash?(first_token) ) # 4 KG or 2 1/5 Kg
         if( has_a_slash?(second_token) ) # 2 1/5 KG
           quantity = first_token.concat(" "+second_token)
-          third_token = split_string.third
-          measure = third_token unless (third_token.size > PLAUSIBLE_MEASURE_SIZE) && (!MEASURE_WORDS.include?(third_token))
+          third_token = split_string.shift
+          measure = validate_measure third_token, ingredient
         else  # its 4 KG
           quantity = first_token
-          measure = second_token unless (second_token.size > PLAUSIBLE_MEASURE_SIZE) && (!MEASURE_WORDS.include?(second_token))
+          measure = validate_measure second_token, ingredient         
         end      
       else # Its stuck together or has slash (4Kg or 1/4 KG)
         if(has_a_slash?(first_token) && !is_digit(second_token) ) # its 1/4 KG
           quantity = first_token
-          measure = second_token unless (second_token.size > PLAUSIBLE_MEASURE_SIZE) && (!MEASURE_WORDS.include?(second_token))
+          measure = validate_measure second_token, ingredient          
         else # Its stuck , 4Kg
           quantity = first_token.gsub(/[^0-9]/, '')
           temp_measure = first_token.gsub(/[^A-Za-z]/, '')
-          measure = temp_measure unless (first_token.size > PLAUSIBLE_MEASURE_SIZE) && (!MEASURE_WORDS.include?(temp_measure))
-        end     
+          measure = validate_measure temp_measure, ingredient          
+        end      
       end 
-    
     end
-    return measure, quantity
+    
+    ingredient << split_string
+    return measure, quantity, ingredient.join(" ")
   end
   
-  #private 
+  #private  
+  def validate_measure measure_token, ingredient_list
+    measure = nil
+    if (MEASURE_WORDS.include?(measure_token)) || (measure_token.size < PLAUSIBLE_MEASURE_SIZE) 
+      measure = measure_token
+    else
+      ingredient_list << measure_token
+    end
+    return measure      
+  end
+  
   def is_digit? str
     begin Float(str) ; true end rescue false  
   end
   
   def has_any_number? str
-    !(str =~ /\d/).nil?
+    !str.nil? and !(str =~ /\d/).nil?
   end
   
   def has_a_slash? str
-    str.include?("/")
+    !str.nil? and str.include?("/")
   end 
 
 end

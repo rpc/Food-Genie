@@ -1,9 +1,13 @@
 Foodgenie::Application.routes.draw do
+  resources :blenders
+  post "blenders/blend"
+  match 'blenders' => 'blender#new'
+
   resources :watchers
 
   get "blender/blend"
   get "blender/index"
-  match 'blender' => 'blender#index'
+  
 
   get "food_genie/index"
   get "food_genie/search"

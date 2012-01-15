@@ -11,7 +11,19 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120111134238) do
+ActiveRecord::Schema.define(:version => 20120115133501) do
+
+  create_table "blenders", :force => true do |t|
+    t.string   "difficulty"
+    t.integer  "time"
+    t.integer  "category"
+    t.integer  "many_ppl"
+    t.string   "title"
+    t.string   "blending_ingredients"
+    t.string   "blending_text"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "categories", :force => true do |t|
     t.string   "name"
