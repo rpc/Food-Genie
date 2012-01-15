@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  difficulty: MyString
+  time: 1
+  category: 1
+  many_ppl: 1
+  title: MyString
+  blending_ingredients: MyString
+  blending_text: MyString
+
+two:
+  difficulty: MyString
+  time: 1
+  category: 1
+  many_ppl: 1
+  title: MyString
+  blending_ingredients: MyString
+  blending_text: MyString
