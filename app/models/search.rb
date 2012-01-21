@@ -31,8 +31,7 @@ class Search
 
 		# Searches unless search_field is blank/nil OR the search_options are invalid.
     unless search_field.blank? or !errors.blank?      
-      
-      result_set = parse_entry_string search_field#.downcase
+      result_set = parse_entry_string search_field.downcase
       @result_find = find_in_result_set result_set
     end
 	end
@@ -47,16 +46,57 @@ class Search
 
     Rails.logger.debug "** Search:find_in_result"
     Rails.logger.debug "* Result set: #{result_set}"
-    query = Recipe.joins(:ingredients => :food_item)
 
-		# Adds the SEARCH_OPTIONS
-		query = query.where(:difficulty => self.difficulty)
-		query = query.where(:time => self.time)
-		query = query.where(:category_id => self.category)
-
-    query = query.where("food_items.name" => result_set)
+		# Recipe filter query
+		recipe_query = Recipe.joins(:ingredients => :food_item)
+		recipe_or_query = build_query_with_or("food_items.name",result_set)
+		recipe_query = recipe_query.where(recipe_or_query)
+		recipe_query = recipe_query.select("DISTINCT recipes.*")
     
-    Rails.logger.debug "* Query: #{query.to_sql}"
+    # Ingredients Filter
+    ingredient_or_query = build_query_with_or("name",result_set)
+    ingredients_query = FoodItem.where(ingredient_or_query)
+    
+    Rails.logger.debug "* Recipe Query: #{recipe_query.to_sql}"
+    Rails.logger.debug "* Ingredient Query: #{ingredients_query.to_sql}"
+    
+    rank_recipe_hash = rank_recipes(recipe_query, ingredients_query)
+    Rails.logger.debug "* Recipes Ranked: #{rank_recipe_hash}"
+    
+    sorted_rank_recipe_hash = sort_recipes(rank_recipe_hash)    
+    Rails.logger.debug "* Recipes Ranked and Sorted: #{sorted_rank_recipe_hash}"
+  end
+  
+  def rank_recipes recipe_query, ingredients_query
+    recipes_ranked = {}
+    
+    recipe_query.each do |recipe|
+      debugger  
+      match_percent = recipe.match_recipe_with_ingredients ingredients_query
+      if recipes_ranked.key?(match_percent) 
+        recipes_ranked[match_percent] << recipe 
+      else
+        recipes_ranked[match_percent] = []
+        recipes_ranked[match_percent] << recipe 
+      end
+      Rails.logger.debug "* Match percent #{match_percent}"
+    end    
+  end
+  
+  def sort_recipes rank_recipe_hash
+    return Hash[rank_recipe_hash.sort]
+  end
+  
+  private
+  def build_query_with_or attribute, compare_list
+    or_query = ""
+    unless attribute.blank?
+      compare_list.each_with_index do |item, index|      
+        or_query << "#{attribute} LIKE '%#{item}%' OR " if index+1 != compare_list.count
+        or_query << "#{attribute} LIKE '%#{item}%'" if index+1 == compare_list.count
+      end
+    end
+    return or_query
   end
   
 

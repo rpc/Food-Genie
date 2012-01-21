@@ -51,7 +51,7 @@ class Blender < ActiveRecord::Base
     ingredient_line.gsub!(/\b(#{STOP_WORDS.join('|')})\b/mi, ' ')
     
     # Parses line
-    measure, quantity, ingredient = get_measure_quantity_and_ingredient ingredient_line
+    measure, quantity, ingredient = get_measure_quantity_and_ingredient ingredient_line.downcase
            
     Rails.logger.debug "* Parsed Ingredient: Quant:(#{quantity}) Meas:(#{measure}) Name:(#{ingredient})"
     
