@@ -10,8 +10,7 @@ class Search
   validates_presence_of :time, :message => TIME_PARAM_ERR
   validates_presence_of :category, :message => CATEGORY_PARAM_ERR
   
-  def initialize(search_options)
-    
+  def initialize(search_options)    
     Rails.logger.debug "** Search::Initialize"   
     Rails.logger.debug "* search_options: #{search_options.inspect}"    
 
@@ -19,8 +18,7 @@ class Search
 			self.difficulty = search_options[:difficulty]
 			self.time = search_options[:time]
 			self.category = search_options[:category]
-		end
-    
+		end    
   end 
 
 	def preform_search search_field
@@ -43,15 +41,15 @@ class Search
   end
   
   def find_in_result_set result_set
-
     Rails.logger.debug "** Search:find_in_result"
     Rails.logger.debug "* Result set: #{result_set}"
 
-		# Recipe filter query
+		# Recipe filter query - Buildes a query that uses the search_options and ingredients passed
 		recipe_query = Recipe.joins(:ingredients => :food_item)
 		recipe_or_query = build_query_with_or("food_items.name",result_set)
 		recipe_query = recipe_query.where(recipe_or_query)
 		recipe_query = recipe_query.select("DISTINCT recipes.*")
+		recipe_query = recipe_query.order("recipes.time asc")
     
     # Ingredients Filter
     ingredient_or_query = build_query_with_or("name",result_set)
@@ -60,22 +58,22 @@ class Search
     Rails.logger.debug "* Recipe Query: #{recipe_query.to_sql}"
     Rails.logger.debug "* Ingredient Query: #{ingredients_query.to_sql}"
     
+    # Ranks the recipes based on how it matchs the ingredients
     rank_recipe_hash = rank_recipes(recipe_query, ingredients_query)
     Rails.logger.debug "* Recipes Ranked: #{rank_recipe_hash}"
     
+    # Sorts the ranked hash based on the biggest match
     sorted_rank_recipe_hash = sort_recipes(rank_recipe_hash)    
     Rails.logger.debug "* Recipes Ranked and Sorted: #{sorted_rank_recipe_hash}"
   end
   
   def rank_recipes recipe_query, ingredients_query
-    recipes_ranked = {}
-    
+    recipes_ranked = {}    
     recipe_query.each do |recipe|
-      debugger  
       match_percent = recipe.match_recipe_with_ingredients ingredients_query
       if recipes_ranked.key?(match_percent) 
         recipes_ranked[match_percent] << recipe 
-      else
+      else # If its the first time that has this rank, creates a array to store
         recipes_ranked[match_percent] = []
         recipes_ranked[match_percent] << recipe 
       end
@@ -97,9 +95,6 @@ class Search
       end
     end
     return or_query
-  end
-  
-
-  
+  end  
 end
 
