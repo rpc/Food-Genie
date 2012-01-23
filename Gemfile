@@ -9,7 +9,7 @@ gem 'therubyracer'
 #gem 'active_form'
 
 group :production do
-  gem 'pg'
+  #gem 'pg'
 end
 group :development, :test do
   gem 'sqlite3'

@@ -19,7 +19,8 @@ class FoodGenieController < ApplicationController
     watch_search
 
     search = Search.new(params[:search_options])
-    search.preform_search(params[:search_field])
+    @result_find = search.preform_search(params[:search_field])
+    Rails.logger.debug "* @Result Find #{@result_find.to_sql}"
     search.valid?
     flash[:errors] = search.errors
     flash[:notice] = search.info
@@ -29,8 +30,7 @@ class FoodGenieController < ApplicationController
   
   private
   
-  def watch_search
-    
+  def watch_search    
     unless (params[:search_options].blank? || params[:search_field].blank?)
     Watcher.create(:query => params[:search_field], 
                    :who => request.remote_ip,

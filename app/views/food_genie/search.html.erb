@@ -1,4 +1,7 @@
 <h1>FoodGenie#search</h1>
-<p>Result: <%=@result_recipe%> </p>
+<% @result_find.each do |recipe| %>
+  <%= render :partial => "single_recipe", :locals => {:recipe => recipe} %>  
+<% end %>
+
 <p><%= flash[:errors].messages %></p>
 <p><%= flash[:notice] %></p>

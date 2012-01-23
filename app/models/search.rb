@@ -28,13 +28,15 @@ class Search
 		Rails.logger.debug "* search_field: #{search_field.inspect}"
 
 		result_set = nil
+		result_find = []
 
 		# Searches unless search_field is blank/nil OR the search_options are invalid.
     unless search_field.blank? or !errors.blank?      
       
       result_set = parse_entry_string search_field#.downcase
-      @result_find = find_in_result_set result_set
+      result_find = find_in_result_set result_set
     end
+    return result_find
 	end
 
   def parse_entry_string entry_string
@@ -44,19 +46,19 @@ class Search
   end
   
   def find_in_result_set result_set
-
     Rails.logger.debug "** Search:find_in_result"
     Rails.logger.debug "* Result set: #{result_set}"
     query = Recipe.joins(:ingredients => :food_item)
 
 		# Adds the SEARCH_OPTIONS
 		query = query.where(:difficulty => self.difficulty)
-		query = query.where(:time => self.time)
+		query = query.where("time <= ?",self.time) # tem que se fazer a relacao
 		query = query.where(:category_id => self.category)
 
-    query = query.where("food_items.name" => result_set)
-    
+    query = query.where("food_items.name" => result_set)    
     Rails.logger.debug "* Query: #{query.to_sql}"
+    
+    return query
   end
   
 
