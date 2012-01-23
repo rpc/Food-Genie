@@ -16,7 +16,8 @@ Foodgenie::Application.routes.draw do
   resources :ingredients
   resources :categories
   resources :recipes
-  resources :food_items
+  resources :food_items, :collection => {:formatted => [:get, :post]}
+  
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

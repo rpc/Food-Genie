@@ -1,4 +1,5 @@
 class FoodGenieController < ApplicationController
+
   def index
   end
 

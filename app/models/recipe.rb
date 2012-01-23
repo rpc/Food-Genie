@@ -12,4 +12,6 @@ class Recipe < ActiveRecord::Base
     return matched_percent
   end
   
+ 
+  
 end

@@ -17,4 +17,8 @@ class Ingredient < ActiveRecord::Base
       self.food_item_id = f_item.id unless f_item.blank?
     end    
   end
+  
+  def food_item_name
+    self.food_item.name if food_item
+  end
 end
