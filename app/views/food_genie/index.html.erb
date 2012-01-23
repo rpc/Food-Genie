@@ -20,7 +20,9 @@
 </div>
   
   <p>
-    <%= text_field_tag :search_field, params[:search] %>
+    <%#= text_field_tag :search_field, params[:search] %>
+    <%#= autocomplete_field :food_item, :name, autocomplete_category_name_categories_path %>
+    <%= autocomplete_field :ingredient, :food_item_name, { :size => 15 }, { :url => food_items_path, :format  => :js, :method => :get, :param_name => 'search' } %>
     <%= submit_tag "Search", :name => nil %>
   </p>
   

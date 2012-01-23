@@ -1,4 +1,5 @@
 class FoodGenieController < ApplicationController
+
   def index
   end
 
@@ -22,8 +23,8 @@ class FoodGenieController < ApplicationController
     @result_find = search.preform_search(params[:search_field])
     Rails.logger.debug "* @Result Find #{@result_find.to_sql}"
     search.valid?
-    flash[:errors] = search.errors
-    flash[:notice] = search.info
+    #flash[:errors] = search.errors
+    #flash[:notice] = search.info
     logger.debug "* Errors: #{errors.inspect} :: Msg: #{fn.inspect}"      
     
   end
