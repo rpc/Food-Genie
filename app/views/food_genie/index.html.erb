@@ -22,7 +22,11 @@
   <p>
     <%#= text_field_tag :search_field, params[:search] %>
     <%#= autocomplete_field :food_item, :name, autocomplete_category_name_categories_path %>
-    <%= autocomplete_field :ingredient, :food_item_name, { :size => 15 }, { :url => food_items_path, :format  => :js, :method => :get, :param_name => 'search' } %>
+    <%#= autocomplete_field :ingredient, :food_item_name, { :size => 15 }, { :url => food_items_path, :format  => :js, :method => :get, :param_name => 'search' } %>
+    <%#= text_field :ingredient, :food_item_name, data: {autocomplete_source: food_items_path} %>
+    <%= autocomplete_field :ingredient, :food_item_name,  food_items_path %>
+</p>
+
     <%= submit_tag "Search", :name => nil %>
   </p>
   

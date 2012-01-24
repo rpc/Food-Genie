@@ -2,8 +2,11 @@ class FoodItemsController < ApplicationController
   # GET /food_items
   # GET /food_items.json
   def index
+  puts "bla"
     #@food_items = FoodItem.all
-    @food_items = FoodItem.find(:all, :conditions => ['name LIKE ?', "%#{params[:search]}%"])
+    #@food_items = FoodItem.find(:all, :conditions => ['name LIKE ?', "%#{params[:search]}%"])
+    @food_items = FoodItem.order(:name).where("name like ?", "%#{params[:term]}%")
+    render json: @food_items.map(&:name)
 
     #respond_to do |format|
     #  format.html # index.html.erb
