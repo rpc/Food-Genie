@@ -4,7 +4,7 @@ class FoodItemsController < ApplicationController
   def index
     #@food_items = FoodItem.all
     @food_items = FoodItem.find(:all, :conditions => ['name LIKE ?', "%#{params[:search]}%"])
-
+render json: @food_items.map(&:name)
     #respond_to do |format|
     #  format.html # index.html.erb
     #  format.json { render json: @food_items }
