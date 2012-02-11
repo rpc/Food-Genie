@@ -21,4 +21,8 @@ class Ingredient < ActiveRecord::Base
   def food_item_name
     self.food_item.name if food_item
   end
+  
+  def food_item_name
+    food_item.try(:name)
+  end
 end
