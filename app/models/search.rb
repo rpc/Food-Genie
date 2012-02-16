@@ -24,14 +24,10 @@ class Search
 	def preform_search search_field
 		Rails.logger.debug "** Search::PreformSearch"
 		Rails.logger.debug "* search_field: #{search_field.inspect}"
-
-		result_set = nil
 		result_find = []
 
 		# Searches unless search_field is blank/nil OR the search_options are invalid.
-    unless search_field.blank? or !errors.blank?      
-
-      
+    unless search_field.blank? or !errors.blank? 
       result_set = parse_entry_string search_field.downcase
       result_find = find_in_result_set result_set
     end
@@ -41,7 +37,7 @@ class Search
   def parse_entry_string entry_string
      # entry_array = entry_string.gsub(/[^A-Za-z\+\-]/, ' ').split(' ').delete_if {|word| word.end_with?("-") or  word.end_with?("+") }
      # Operations: Leaves only chars; Breaks on Spaces; Singularizes each word.
-    entry_array = entry_string.gsub(/[^A-Za-z]/, ' ').split(' ') #.map{|ingredient| ingredient.singularize}
+    entry_string.gsub(/[^A-Za-z]/, ' ').split(' ').map{|ingredient| ingredient.singularize}
   end
   
   def find_in_result_set result_set
@@ -65,7 +61,7 @@ class Search
     # Ranks the recipes based on how it matchs the ingredients
     rank_recipe_hash = rank_recipes(recipe_query, ingredients_query)
     Rails.logger.debug "* Recipes Ranked: #{rank_recipe_hash}"
-    
+ 
     # Sorts the ranked hash based on the biggest match
     sorted_rank_recipe_hash = sort_recipes(rank_recipe_hash)    
     Rails.logger.debug "* Recipes Ranked and Sorted: #{sorted_rank_recipe_hash}"
@@ -84,7 +80,8 @@ class Search
         recipes_ranked[match_percent] << recipe 
       end
       Rails.logger.debug "* Match percent #{match_percent}"
-    end    
+    end 
+    return recipes_ranked 
   end
   
   def sort_recipes rank_recipe_hash

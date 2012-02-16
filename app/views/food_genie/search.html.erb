@@ -1,5 +1,7 @@
 <h1>FoodGenie#search</h1>
-<% @result_find.each do |recipe| %>
-  <%= render :partial => "single_recipe", :locals => {:recipe => recipe} %>  
+<% @result_find.each do |match, recipes| %>
+    <% recipes.each do |recipe| %>
+      <%= render :partial => "single_recipe", :locals => {:recipe => recipe, :match => match} %>  
+    <%  end %>
 <% end %>
 

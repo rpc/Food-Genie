@@ -5,3 +5,10 @@
  *= require_self
  *= require_tree . 
 */
+html {
+      background-image: url('images/carbon.jpg');
+      background-repeat: repeat;
+      background-position: left top;
+}
+
+

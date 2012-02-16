@@ -1,45 +1,28 @@
 class FoodGenieController < ApplicationController
 
+
+
   def index
   end
 
   def search
-    
     # Test Strings:
     # chocolate, ovo; carne; coisas
     # ada , ddsd ; dasd ..  - fefw +err fwfe adsad egg eggs food meats chocolates
   
-    logger.debug "** Controller: FoodGenie :: Action: Search"
-    logger.debug "* Params: #{params}"
-    errors = []
-    fn = []
-    search = nil
-    
-    @result_recipe = "my recp"
-    
+    logger.debug "** Controller: FoodGenie :: Action: Search\n* Params: #{params}"
     watch_search
 
     search = Search.new(params[:search_options])
-    @result_find = search.preform_search(params[:search_field])
-    Rails.logger.debug "* @Result Find #{@result_find.to_sql}"
-    search.valid?
-    #flash[:errors] = search.errors
-    #flash[:notice] = search.info
-    logger.debug "* Errors: #{errors.inspect} :: Msg: #{fn.inspect}"      
-    
+    @result_find = search.preform_search(params[:ingredient][:food_item_name])
+    Rails.logger.debug "* @Result Find #{@result_find.inspect}"
+    search.valid?  
   end
   
-  private
-  
+  private  
   def watch_search    
-    unless (params[:search_options].blank? || params[:search_field].blank?)
-    Watcher.create(:query => params[:search_field], 
-                   :who => request.remote_ip,
-                   :time => params[:search_options][:time],
-                   :category => params[:search_options][:category],
-                   :difficulty => params[:search_options][:difficulty],
-                   :action => controller_name+":"+action_name)
-    end
+    watcher = Watcher.new
+    watcher.build_watcher(params[:search_options],params[:ingredient][:food_item_name], request, controller_name, action_name)
   end
 
 end
