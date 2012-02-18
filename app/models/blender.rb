@@ -2,7 +2,7 @@ class Blender < ActiveRecord::Base
   
   STOP_WORDS = [" de "," com "]
   MEASURE_WORDS = ["colheres","pacote","quarts","teaspoon","cups","tablespoons"]
-  PLAUSIBLE_MEASURE_SIZE = 5
+  PLAUSIBLE_MEASURE_SIZE = 4
   
   validates_presence_of :difficulty, :message => "Please choose the difficulty"
   validates_presence_of :time, :message => "Choose the cooking time"
@@ -15,7 +15,9 @@ class Blender < ActiveRecord::Base
   validates_presence_of :blending_ingredients, :message => "Cant blend withou ingredients"
   validates_presence_of :blending_text, :message => "You must provide a text"
   
-  def blend
+  attr_accessor :recipe
+  
+   def blend
     #Rails.logger.debug "== Blender::blend"
     ok_count = 0
     ingredient_list = []
@@ -38,7 +40,8 @@ class Blender < ActiveRecord::Base
       end
     end
     
-    Rails.logger.debug "= Result: #{ok_count}/#{blending_ingredients.split("\n").count}"    
+    Rails.logger.debug "= Result: #{ok_count}/#{blending_ingredients.split("\n").count}"  
+    self.recipe = recipe  
     return recipe
   end
   
@@ -60,6 +63,7 @@ class Blender < ActiveRecord::Base
   end
   
   def add_ingredient_to_recipe quantity, measure, food_item_name, recipe
+  
     food_item = FoodItem.new(:name => food_item_name, :price => nil)
     ingredient = Ingredient.new(:food_item => food_item, :quantity => quantity, :measure => measure, :recipe_id => recipe.id)
     recipe.ingredients << ingredient

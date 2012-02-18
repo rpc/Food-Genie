@@ -1,5 +1,7 @@
 class BlendersController < ApplicationController
 
+layout "blender"
+
   def index
      redirect_to :action => "new"
   end 

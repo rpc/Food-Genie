@@ -1,3 +1,78 @@
 // Place all the styles related to the Blender controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+body{
+	background-image: url('images/carbon.jpg');
+	font-family: 'Helvetica', 'Lucida Grande', 'Arial', sans-serif;
+}
+.border, .rain{ // OK
+	height: 900px;
+	width: 680px;
+}
+/* Layout with mask */
+.rain{ //OK
+	 padding: 10px 12px 12px 10px; // Padding da caixa extrior
+	 box-shadow: 4px 4px 4px rgba(0,0,0,1) inset, -4px -4px 4px rgba(0,0,0,1) inset; // Sombra da caixa extrior
+	 margin: 100px auto; // Margem em relacao ao topo
+}
+
+/* Regular Form Styles */
+form{
+	background: #b7bbbf;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+  border-radius: 5px;
+	height: 100%;
+	width: 100%;
+}
+form label{ // Todas a labels do form
+	display: block;
+	padding: 10px 10px 5px 15px;
+	font-size: 17px;
+	text-shadow: 0 1px 2px white;
+	font-weight: bold;
+	color: #1C1B1B;
+}
+form input, textarea{
+	display: block;
+	margin: 5px 10px 5px 15px;
+	width: 85%;
+	background: #EDE8E8;
+	-moz-box-shadow: 0px 0px 4px #000 inset;
+	-webkit-box-shadow: 0px 0px 4px #000 inset;
+	box-shadow: 0px 0px 4px #000 inset;
+	outline: 1px solid #E8E8E8;
+	border: 1px solid #6B6B6B;
+	padding: 5px;
+	color: #444;
+	font-size: 16px;
+}
+
+
+
+form input:focus, textarea:focus{
+	outline: 1px solid #555;
+	color: black;
+	font-weight: bold;
+}
+input[type="submit"]{
+	color: #DBD3D3;
+	padding: 5px 10px;
+	
+	width: 20%;
+	float: right;
+	margin: 20px 0;
+	border: 1px solid #000;
+	font-weight: bold;
+	-moz-border-radius: 15px;
+    -webkit-border-radius: 15px;
+	border-radius: 15px;
+	background: #45484d;
+	background: -moz-linear-gradient(top, #222 0%, #111 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#222), color-stop(100%,#111));
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#22222', endColorstr='#11111',GradientType=0 );
+	-moz-box-shadow: 0px 1px 1px #000, 0px 1px 0px rgba(255,255,255,.3) inset;
+	-webkit-box-shadow: 0px 1px 1px #000, 0px 1px 0px rgba(255,255,255,.3) inset;
+	box-shadow: 0px 1px 1px #000,0px 1px 0px rgba(255,255,255,.3) inset;
+	text-shadow: 0 1px 1px #000;
+}

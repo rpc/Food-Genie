@@ -1,5 +1,7 @@
-<%= form_for(@blender) do |f| %>
-  <% if @blender.errors.any? %>
+<body id="home">
+		<div class="rain">
+			<div class="border start">
+<% if @blender.errors.any? or (@blender.recipe && @blender.recipe.errors.any?)%>
     <div id="error_explanation">
       <h2><%= pluralize(@blender.errors.count, "error") %> prohibited this blender from being saved:</h2>
 
@@ -7,43 +9,63 @@
       <% @blender.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
       <% end %>
+      <% @blender.recipe.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
       </ul>
     </div>
-  <% end %>
+<% end %>
+
+<%= form_for(@blender) do |f| %>
+  
   
   <div class="field">
-    <%= f.label :title %><br />
+    <%= f.label :title %>
     <%= f.text_field :title %>
   </div>  
   <div class="field">
-    <%= f.label :blending_ingredients %><br />
+    <%= f.label :blending_ingredients %>
     <%= f.text_area :blending_ingredients, {:cols => 60, :rows => 10} %>
-  </div>
-  <div class="field">
-    <%= f.label :blending_text %><br />
-    <%= f.text_area :blending_text, {:cols => 60, :rows => 10} %>
-  </div>
-  <div class="field">
-    <%= f.label :difficulty %><br />
-    easy<%= f.radio_button :difficulty, "easy", :checked => true%>
-    medium<%= f.radio_button :difficulty, "medium" %>
-    hardcore<%= f.radio_button :difficulty, "hardcore" %>
-  </div>
-  <div class="field">
-    <%= f.label :category %><br />
-    dessert<%= f.radio_button :category, 1 %>
-    dish<%= f.radio_button :category, 2, :checked => true %>
-    entrance<%= f.radio_button :category, 3 %>
   </div>  
   <div class="field">
-    <%= f.label :time %><br />
-    <%= f.number_field :time %>
+    <%= f.label :blending_text %>
+    <%= f.text_area :blending_text, {:cols => 60, :rows => 10} %>
   </div>
-  <div class="field">
-    <%= f.label :many_ppl %><br />
-    <%= f.number_field :many_ppl %>
+  <table class="">
+    <tr>
+      <td><%= f.label :time %><td>
+      <td><%= f.label :many_ppl %></td>
+    </tr>
+    <tr>
+      <td><%= f.number_field :time %><td>
+      <td><%= f.number_field :many_ppl %></td>
+    </tr>    
+  </table>  
+  <table class="" border=0 width='650px' style="padding-left: 10px;">
+  <tr>
+    <td><%= f.label :category %><td>
+    <td><%= f.label :difficulty %> </td>
+  </tr>
+  <tr>
+    <td><%= f.collection_select :category, Category.all, :id, :name %><td>
+    <td >
+      <div class="field"> 
+        <div style="float:left">easy<%= f.radio_button :difficulty, "easy", :checked => true%></div>
+        <div style="float:left">medium<%= f.radio_button :difficulty, "medium" %></div>
+        <div style="float:left">hardcore<%= f.radio_button :difficulty, "hardcore" %></div>
+      </div>
+    </td>
+  </tr>    
+  </table>
+
+
+
+ 
+		</div>
+		<div >
+  <%= f.submit "Blend" %>
+</div>
   </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+</body>
+	 
 <% end %>
