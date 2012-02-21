@@ -1,6 +1,10 @@
-<body id="home">
-		<div class="rain">
-			<div class="border start">
+<div id="formated_image" style="padding-top: 20px;">
+  <img src="images/foodgenie.png" alt="FoodGenie" width="300" height="75"  /> 
+</div>
+<div id="formated_image">
+  <img src="images/blender.png" alt="blender" width="200" height="60"  /> 
+</div>
+
 <% if @blender.errors.any? or (@blender.recipe && @blender.recipe.errors.any?)%>
     <div id="error_explanation">
       <h2><%= pluralize(@blender.errors.count, "error") %> prohibited this blender from being saved:</h2>
@@ -16,56 +20,52 @@
     </div>
 <% end %>
 
-<%= form_for(@blender) do |f| %>
-  
-  
-  <div class="field">
-    <%= f.label :title %>
-    <%= f.text_field :title %>
-  </div>  
-  <div class="field">
-    <%= f.label :blending_ingredients %>
-    <%= f.text_area :blending_ingredients, {:cols => 60, :rows => 10} %>
-  </div>  
-  <div class="field">
-    <%= f.label :blending_text %>
-    <%= f.text_area :blending_text, {:cols => 60, :rows => 10} %>
-  </div>
-  <table class="">
-    <tr>
-      <td><%= f.label :time %><td>
-      <td><%= f.label :many_ppl %></td>
-    </tr>
-    <tr>
-      <td><%= f.number_field :time %><td>
-      <td><%= f.number_field :many_ppl %></td>
-    </tr>    
-  </table>  
-  <table class="" border=0 width='650px' style="padding-left: 10px;">
-  <tr>
-    <td><%= f.label :category %><td>
-    <td><%= f.label :difficulty %> </td>
-  </tr>
-  <tr>
-    <td><%= f.collection_select :category, Category.all, :id, :name %><td>
-    <td >
-      <div class="field"> 
-        <div style="float:left">easy<%= f.radio_button :difficulty, "easy", :checked => true%></div>
-        <div style="float:left">medium<%= f.radio_button :difficulty, "medium" %></div>
-        <div style="float:left">hardcore<%= f.radio_button :difficulty, "hardcore" %></div>
+<div id="blender_box">
+  <%= form_for(@blender) do |f| %>  
+    <div>
+      <h2>Title</h2><br class="clear">
+      <%= f.text_field :title %><br class="clear">
+    </div>  
+    
+    <div class="field">
+      <h2>Ingredients</h2><br class="clear">
+      <%= f.text_area :blending_ingredients, {:cols => 60, :rows => 10} %><br class="clear">      
+    </div>  
+    <div class="field">
+      <h2>Recipe description</h2><br class="clear">
+      <%= f.text_area :blending_text, {:cols => 60, :rows => 10} %><br class="clear">
+    </div>
+    <div class="twoColunms">
+      <div class="cols" >
+        <h2>How long does it take?</h2><br class="clear">
+        <%= f.text_field :time %><br class="clear">
       </div>
-    </td>
-  </tr>    
-  </table>
-
-
-
- 
-		</div>
-		<div >
-  <%= f.submit "Blend" %>
+      <div class="cols" >
+        <h2>For how many people?</h2><br class="clear">
+        <%= f.text_field :many_ppl %><br class="clear">
+      </div>    
+    </div>
+    <div class="twoColunms">
+      <div class="cols", style="padding-left: " >
+        <h2>How hard is it?</h2><br class="clear">
+        <div class="align_options">        
+          <p>easy</p><%= f.radio_button :difficulty, "easy", :checked => true%>
+          <p>medium</p><%= f.radio_button :difficulty, "medium" %>
+          <p>hardcore</p><%= f.radio_button :difficulty, "hardcore" %>
+        </div>          
+      </div>
+      <div class="cols" >
+        <h2>Category</h2><br class="clear">
+          <div class="align_options"> 
+            <%= f.collection_select :category, Category.all, :id, :name %><br class="clear">
+          </div>
+      </div>      
+    </div>    
+    <br class="clear">
 </div>
-  </div>
-</body>
-	 
+<div id="blender_outBox">
+  <%= f.submit "Blend", :class => "go" %>
+<div>
 <% end %>
+	 
+

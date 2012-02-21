@@ -2,6 +2,7 @@ Foodgenie::Application.routes.draw do
   resources :blenders
   post "blenders/blend"
   match 'blenders' => 'blender#new'
+  match 'blenders/novo' => 'blenders#novo'
 
   resources :watchers
 
