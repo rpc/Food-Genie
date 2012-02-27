@@ -95,7 +95,7 @@ class Blender < ActiveRecord::Base
           measure = validate_measure second_token, ingredient         
         end      
       else # Its stuck together or has slash (4Kg or 1/4 KG)
-        if(has_a_slash?(first_token) && !is_digit(second_token) ) # its 1/4 KG
+        if(has_a_slash?(first_token) && !is_digit?(second_token) ) # its 1/4 KG
           quantity = first_token
           measure = validate_measure second_token, ingredient          
         else # Its stuck , 4Kg
