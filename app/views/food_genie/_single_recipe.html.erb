@@ -1,7 +1,11 @@
-<p>Result: <%= recipe.title %> </p>
+<h2>(<%= match %>)<%= recipe.title %> (T:<%= recipe.time  %>) (D:<%= recipe.difficulty %>) (P:<%= recipe.many_ppl %>) </h2>
 <p>
   <b>Ingredients:</b>
   <% recipe.ingredients.each do |ingredient| %>
     <p>- <%=  ingredient.quantity %> <%=  ingredient.measure %> <%= ingredient.food_item.name %></p>
   <% end %>
+  <p><%= "(...)" if recipe.ingredients.count > MAX_INGREDIENTS_RESULT_SET %></p>
+  <b>Instruções:</b>  
+  <%= truncate(recipe.text, :length => MAX_RECIPE_TEXT_RESULT_SET, :separator => ' ',:omission => '... (continua)') %>
 </p>
+</br>

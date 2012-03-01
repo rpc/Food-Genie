@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120115133501) do
+ActiveRecord::Schema.define(:version => 20120301132730) do
 
   create_table "blenders", :force => true do |t|
     t.string   "difficulty"
@@ -51,7 +51,7 @@ ActiveRecord::Schema.define(:version => 20120115133501) do
   create_table "recipes", :force => true do |t|
     t.integer  "many_ppl"
     t.string   "title"
-    t.string   "difficulty"
+    t.integer  "difficulty",    :limit => 255
     t.integer  "time"
     t.integer  "category_id"
     t.string   "text"

@@ -2,9 +2,9 @@
 <%= form_tag food_genie_search_path, :method => 'get' do %>
 
 <div>
-  easy<%= radio_button :search_options, :difficulty, "easy", :checked => true%>
-  medium<%= radio_button :search_options, :difficulty, "medium" %>
-  hard<%= radio_button :search_options, :difficulty, "hard" %>
+  easy<%= radio_button :search_options, :difficulty, 1, :checked => true%>
+  medium<%= radio_button :search_options, :difficulty, 2 %>
+  hard<%= radio_button :search_options, :difficulty, 3 %>
 </div>
 
 <div>
@@ -14,9 +14,9 @@
 </div>
 
 <div>
-  short<%= radio_button :search_options, :time, 25 %>
-  medium<%= radio_button :search_options, :time, 80, :checked => true %>
-  long<%= radio_button :search_options, :time, 120 %>
+  short<%= radio_button :search_options, :time, 15%>
+  medium<%= radio_button :search_options, :time, 40, :checked => true%>
+  long<%= radio_button :search_options, :time, 9999%>
 </div>
   
 <div class="form-wrapper">

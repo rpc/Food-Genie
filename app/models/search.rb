@@ -50,6 +50,11 @@ class Search
 		recipe_query = recipe_query.where(recipe_or_query)
 		recipe_query = recipe_query.select("DISTINCT recipes.*")
 		recipe_query = recipe_query.order("recipes.time asc")
+		
+		# Ingredient Options
+		recipe_query = recipe_query.where(:category_id => self.category)
+  	recipe_query = recipe_query.where("time <= ?",self.time)
+  	recipe_query = recipe_query.where("difficulty <= ?",self.difficulty)
     
     # Ingredients Filter
     ingredient_or_query = build_query_with_or("name",result_set)
@@ -59,7 +64,7 @@ class Search
     Rails.logger.debug "* Ingredient Query: #{ingredients_query.to_sql}"
     
     # Ranks the recipes based on how it matchs the ingredients
-    rank_recipe_hash = rank_recipes(recipe_query, ingredients_query)
+    rank_recipe_hash = rank_recipes(recipe_query, ingredients_query, result_set.size)
     Rails.logger.debug "* Recipes Ranked: #{rank_recipe_hash}"
  
     # Sorts the ranked hash based on the biggest match
@@ -69,10 +74,10 @@ class Search
     return sorted_rank_recipe_hash
   end
   
-  def rank_recipes recipe_query, ingredients_query
+  def rank_recipes recipe_query, ingredients_query, number_of_raw_ingredients
     recipes_ranked = {}    
     recipe_query.each do |recipe|
-      match_percent = recipe.match_recipe_with_ingredients ingredients_query
+      match_percent = recipe.match_recipe_with_ingredients(ingredients_query,number_of_raw_ingredients)
       if recipes_ranked.key?(match_percent) 
         recipes_ranked[match_percent] << recipe 
       else # If its the first time that has this rank, creates a array to store
@@ -85,7 +90,8 @@ class Search
   end
   
   def sort_recipes rank_recipe_hash
-    return Hash[rank_recipe_hash.sort]
+  debugger
+    return Hash[rank_recipe_hash.sort.reverse]
   end
   
   private
@@ -99,5 +105,9 @@ class Search
     end
     return or_query
   end  
+
+    
+  
+  
 end
 

@@ -10,11 +10,12 @@ class Recipe < ActiveRecord::Base
   validates_presence_of :time
   validates_presence_of :category_id  
   
-  def match_recipe_with_ingredients ingredient_list
+  def match_recipe_with_ingredients ingredient_list, number_of_raw_ingredients
     matched_percent = 0
     unless ingredient_list.blank?
       matched_ingredients = self.food_items & ingredient_list
-      matched_percent = (matched_ingredients.size*100)/ingredient_list.size
+      matched_percent = (matched_ingredients.size*100)/number_of_raw_ingredients
+      matched_percent = 100 if matched_percent > 100
     end
     return matched_percent
   end
