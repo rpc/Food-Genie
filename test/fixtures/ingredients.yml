@@ -1,9 +1,0 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
-
-one:
-  food_item_id: 1
-  quantity: 1
-
-two:
-  food_item_id: 1
-  quantity: 1

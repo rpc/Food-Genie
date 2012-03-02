@@ -3,6 +3,7 @@ class Ingredient < ActiveRecord::Base
   belongs_to :recipe
   
   before_save :do_not_repeat_food_item
+  after_destroy :destroy_associated_food_items  
   
   def do_not_repeat_food_item
     # If the inserted FoodItem already exists, gets that one.
@@ -12,6 +13,11 @@ class Ingredient < ActiveRecord::Base
     end        
   end
   
+  def destroy_associated_food_items
+    food_items = Ingredient.find(:all, :conditions => ['food_item_id = ? and id != ?',self.food_item_id,self.id])
+    self.food_item.destroy if food_items.blank?
+  end  
+  
   def food_item_name
     self.food_item.name if food_item
   end
@@ -19,4 +25,5 @@ class Ingredient < ActiveRecord::Base
   def food_item_name
     food_item.try(:name)
   end
+  
 end

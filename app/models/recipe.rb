@@ -1,5 +1,5 @@
 class Recipe < ActiveRecord::Base
-  has_many :ingredients
+  has_many :ingredients, :dependent => :destroy
   has_many :food_items, :through => :ingredients
   belongs_to :category
   
@@ -19,6 +19,7 @@ class Recipe < ActiveRecord::Base
     end
     return matched_percent
   end
+
   
  
   

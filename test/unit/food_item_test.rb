@@ -14,7 +14,7 @@ class FoodItemTest < ActiveSupport::TestCase
   
   test "must have a name" do
     food_item = FoodItem.new
-    assert_no_difference 'FoodItem.count' do
+     assert_no_difference 'FoodItem.count' do
       food_item.save
     end
   end
