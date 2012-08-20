@@ -1,25 +1,4 @@
 class Search
-  include ActiveModel
-  include ActiveModel::Validations
-  
-  attr_accessor :difficulty, :time, :category, :search_field, :result_find
-  attr_accessor :info
-  
-
-  validates_presence_of :difficulty, :message => DIFICULTY_PARAM_ERR
-  validates_presence_of :time, :message => TIME_PARAM_ERR
-  validates_presence_of :category, :message => CATEGORY_PARAM_ERR
-  
-  def initialize(search_options)    
-    Rails.logger.debug "** Search::Initialize"   
-    Rails.logger.debug "* search_options: #{search_options.inspect}"    
-
-		unless search_options.blank?
-			self.difficulty = search_options[:difficulty]
-			self.time = search_options[:time]
-			self.category = search_options[:category]
-		end    
-  end 
 
 	def preform_search search_field
 		Rails.logger.debug "** Search::PreformSearch"
@@ -90,7 +69,6 @@ class Search
   end
   
   def sort_recipes rank_recipe_hash
-  debugger
     return Hash[rank_recipe_hash.sort.reverse]
   end
   

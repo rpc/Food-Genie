@@ -1,8 +1,6 @@
 class BlenderController < ApplicationController
 
-  def index
-    
-    
+  def index    
   end
 
   def blend
