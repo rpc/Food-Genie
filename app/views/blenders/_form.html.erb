@@ -1,0 +1,17 @@
+<%= form_for(@blender) do |f| %>
+  <% if @blender.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@blender.errors.count, "error") %> prohibited this blender from being saved:</h2>
+
+      <ul>
+      <% @blender.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

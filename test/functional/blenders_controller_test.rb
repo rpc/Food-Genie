@@ -18,30 +18,30 @@ class BlendersControllerTest < ActionController::TestCase
 
   test "should create blender" do
     assert_difference('Blender.count') do
-      post :create, blender: @blender.attributes
+      post :create, blender: {  }
     end
 
     assert_redirected_to blender_path(assigns(:blender))
   end
 
   test "should show blender" do
-    get :show, id: @blender.to_param
+    get :show, id: @blender
     assert_response :success
   end
 
   test "should get edit" do
-    get :edit, id: @blender.to_param
+    get :edit, id: @blender
     assert_response :success
   end
 
   test "should update blender" do
-    put :update, id: @blender.to_param, blender: @blender.attributes
+    put :update, id: @blender, blender: {  }
     assert_redirected_to blender_path(assigns(:blender))
   end
 
   test "should destroy blender" do
     assert_difference('Blender.count', -1) do
-      delete :destroy, id: @blender.to_param
+      delete :destroy, id: @blender
     end
 
     assert_redirected_to blenders_path

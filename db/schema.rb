@@ -11,7 +11,12 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120820115520) do
+ActiveRecord::Schema.define(:version => 20120820142155) do
+
+  create_table "blender_forms", :force => true do |t|
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "blenders", :force => true do |t|
     t.string   "difficulty"
