@@ -1,9 +1,6 @@
 require 'test_helper'
 
 class RecipeTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
   
   test "Recipe is created" do
     assert_difference('Recipe.count', 1) do     

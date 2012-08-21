@@ -1,5 +1,7 @@
 require 'test_helper'
 
+
+
 class RecipesControllerTest < ActionController::TestCase
   setup do
     @recipe = recipes(:one)

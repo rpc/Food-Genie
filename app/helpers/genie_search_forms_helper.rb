@@ -1,0 +1,2 @@
+module GenieSearchFormsHelper
+end

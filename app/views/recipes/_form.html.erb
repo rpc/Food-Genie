@@ -14,7 +14,7 @@
 
   <div class="field">
     <%= f.label :many_ppl %><br />
-    <%= f.number_field :many_ppl %>
+    <%= f.text_field :many_ppl %>
   </div>
   <div class="field">
     <%= f.label :title %><br />
@@ -26,29 +26,27 @@
   </div>
   <div class="field">
     <%= f.label :time %><br />
-    <%= f.number_field :time %>
+    <%= f.text_field :time %>
   </div>
   <div class="field">
     <%= f.label :category_id %><br />
-    <%= f.number_field :category_id %>
+    <%= f.text_field :category_id %>
   </div>
   <div class="field">
     <%= f.label :text %><br />
     <%= f.text_area :text, {:cols => 60, :rows => 10} %>
   </div>
-  <div class="field">
-    <%= f.label :extra_content %><br />
-    <%= f.text_field :extra_content %>
-  </div>
+  <!--<div class="field">
+    <%#= f.label :extra_content %><br />
+    <%#= f.text_field :extra_content %>
+  </div>-->
   
   <table>
   <% @recipe.ingredients.each do |ingredient| %>
   <tr>
-    <td><%= ingredient.food_item.name %></td>
-    <td><%= ingredient.quantity %></td>
-    <td><%= link_to 'Show', ingredient %></td>
-    <td><%= link_to 'Edit', edit_ingredient_path(ingredient) %></td>
-    <td><%= link_to 'Destroy', ingredient, confirm: 'Are you sure?', method: :delete %></td>
+    <td><%= collection_select :ingredient, :food_item_id, FoodItem.all, :id, :name, :selected => ingredient.food_item.id %></td>
+    <td><%= text_field :ingredient, :category_id, :value => ingredient.quantity %></td>
+    <td><%= link_to "Destroy", ingredient, :remote => true, :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
   
 <% end %>

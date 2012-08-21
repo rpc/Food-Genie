@@ -1,0 +1,71 @@
+<div id="formated_image" style="padding-top: 20px;">
+  <%= image_tag "foodgenie.png", :alt => "blender" %>
+</div>
+<div id="formated_image">
+  <%= image_tag "blender.png", :alt => "blender" %> 
+</div>
+
+<% if @blender_form.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@blender_form.errors.count, "error") %> prohibited this blender from being saved:</h2>
+
+      <ul>
+      <% @blender_form.errors.values.each do |msg| %>
+        <li><%= msg.first %></li>
+      <% end %>
+      <%# @blender_form.recipe.errors.full_messages.each do |msg| %>
+        <li><%#= msg %></li>
+      <%# end %>
+      </ul>
+    </div>
+<% end %>
+
+<div id="blender_box">
+  <%= form_for(@blender_form) do |f| %>  
+    <div>
+      <h2>Title</h2><br class="clear">
+      <%= f.text_field :title %><br class="clear">
+    </div>  
+    
+    <div class="field">
+      <h2>Ingredients</h2><br class="clear">
+      <%= f.text_area :blending_ingredients, {:cols => 60, :rows => 10} %><br class="clear">      
+    </div>  
+    <div class="field">
+      <h2>Recipe description</h2><br class="clear">
+      <%= f.text_area :blending_text, {:cols => 60, :rows => 10} %><br class="clear">
+    </div>
+    <div class="twoColunms">
+      <div class="cols" >
+        <h2>How long does it take?</h2><br class="clear">
+        <%= f.text_field :time %><br class="clear">
+      </div>
+      <div class="cols" >
+        <h2>For how many people?</h2><br class="clear">
+        <%= f.text_field :many_ppl %><br class="clear">
+      </div>    
+    </div>
+    <div class="twoColunms">
+      <div class="cols", style="padding-left: " >
+        <h2>How hard is it?</h2><br class="clear">
+        <div class="align_options">        
+          <p>easy</p><%= f.radio_button :difficulty, "easy", :checked => true%>
+          <p>medium</p><%= f.radio_button :difficulty, "medium" %>
+          <p>hardcore</p><%= f.radio_button :difficulty, "hardcore" %>
+        </div>          
+      </div>
+      <div class="cols" >
+        <h2>Category</h2><br class="clear">
+          <div class="align_options"> 
+            <%= f.collection_select :category, Category.all, :id, :name %><br class="clear">
+          </div>
+      </div>      
+    </div>    
+    <br class="clear">
+</div>
+<div id="blender_outBox">
+  <%= f.submit "Blend", :class => "go" %>
+<div>
+<% end %>
+   
+
