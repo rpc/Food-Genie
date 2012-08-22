@@ -5,7 +5,6 @@ class FoodItemsController < ApplicationController
     render json: @food_items.map(&:name)
   end
 
-
   def show
     @food_item = FoodItem.find(params[:id])
   end
@@ -24,7 +23,7 @@ class FoodItemsController < ApplicationController
     if @food_item.save
       redirect_to @food_item, notice: 'Food item was successfully created.'
     else
-      render action: "new"
+      render :new
     end
   end
 
@@ -34,12 +33,14 @@ class FoodItemsController < ApplicationController
     if @food_item.update_attributes(params[:food_item])
       redirect_to @food_item, notice: 'Food item was successfully updated.'
     else
-      render action: "edit"
+      render :edit
     end
   end
 
   def destroy
     @food_item = FoodItem.find(params[:id])
     @food_item.destroy
+
+    redirect_to food_items_url, notice: "Successfully destroyed food item."
   end
 end

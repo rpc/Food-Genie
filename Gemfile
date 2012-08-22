@@ -2,8 +2,7 @@ source 'http://rubygems.org'
 
 gem 'rails', '~> 3.2.0'
 gem 'therubyracer'
-
-#gem "nested_form"
+gem "nested_form"
 
 group :development do
   #gem 'ruby-debug19'

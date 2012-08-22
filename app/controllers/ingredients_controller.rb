@@ -1,7 +1,5 @@
 class IngredientsController < ApplicationController
 
-  
-
   def index
     @ingredients = Ingredient.all
   end
@@ -24,7 +22,7 @@ class IngredientsController < ApplicationController
     if @ingredient.save
       redirect_to @ingredient, notice: 'Ingredient was successfully created.' 
     else
-      render action: "new" 
+      render :new
     end
   end
 
@@ -34,15 +32,14 @@ class IngredientsController < ApplicationController
     if @ingredient.update_attributes(params[:ingredient])
       redirect_to @ingredient, notice: 'Ingredient was successfully updated.'
     else
-      render action: "edit"
+      render :edit
     end
-
   end
 
   def destroy
     @ingredient = Ingredient.find(params[:id])
     @ingredient.destroy
 
-    
+    redirect_to ingredients_url, notice: "Successfully destroyed ingredient."
   end
 end

@@ -22,7 +22,7 @@ class CategoriesController < ApplicationController
     if @category.save
       redirect_to @category, notice: 'Food category was successfully created.'
     else
-      render action: "new"
+      render :new
     end
   end
 
@@ -32,7 +32,7 @@ class CategoriesController < ApplicationController
     if @category.update_attributes(params[:category])
       redirect_to @category, notice: 'Food category was successfully updated.'
     else
-      render action: "edit"
+      render :edit
     end
   end
 
@@ -40,6 +40,6 @@ class CategoriesController < ApplicationController
     @category = Category.find(params[:id])
     @category.destroy
 
-    redirect_to categories_url
+    redirect_to categories_url, notice: "Successfully destroyed category."
   end
 end

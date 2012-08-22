@@ -22,9 +22,8 @@ class RecipesController < ApplicationController
     if @recipe.save
       redirect_to @recipe, notice: 'Recipe was successfully created.'
     else
-      render action: "new"
+      render :new
     end
-
   end
 
   def update

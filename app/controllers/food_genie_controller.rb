@@ -1,3 +1,2 @@
 class FoodGenieController < ApplicationController
-
 end

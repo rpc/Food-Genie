@@ -1,9 +1,13 @@
+<!-- Move to CSS -->
+
 <div id="formated_image" style="padding-top: 20px;">
   <%= image_tag "foodgenie.png", :alt => "blender" %>
 </div>
 <div id="formated_image">
   <%= image_tag "blender.png", :alt => "blender" %> 
 </div>
+
+<!--- END -->
 
 <% if @blender_form.errors.any? %>
     <div id="error_explanation">
@@ -25,8 +29,7 @@
     <div>
       <h2>Title</h2><br class="clear">
       <%= f.text_field :title %><br class="clear">
-    </div>  
-    
+    </div>    
     <div class="field">
       <h2>Ingredients</h2><br class="clear">
       <%= f.text_area :blending_ingredients, {:cols => 60, :rows => 10} %><br class="clear">      

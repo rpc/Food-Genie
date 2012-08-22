@@ -1,4 +1,5 @@
-<%= form_for @recipe do |f| %>
+<%= nested_form_for @recipe do |f| %>
+
   <% if @recipe.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@recipe.errors.count, "error") %> prohibited this recipe from being saved:</h2>
@@ -10,7 +11,6 @@
       </ul>
     </div>
   <% end %>
-
 
   <div class="field">
     <%= f.label :many_ppl %><br />
@@ -37,12 +37,8 @@
     <%= f.text_area :text, {:cols => 60, :rows => 10} %>
   </div>
 
-
-  <%= f.fields_for :ingredients do |builder| %>
-    <%= render 'ingredient_fields', f: builder %>
-  <% end %>
-
-  <%= link_to_add_fields "Add Ingredientss", f, :ingredients %>
+  <%= f.fields_for :ingredients %>
+  <p><%= f.link_to_add "Add a ingredient", :ingredients %></p>
 
   <div class="actions">
     <%= f.submit %>
