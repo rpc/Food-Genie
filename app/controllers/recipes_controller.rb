@@ -29,16 +29,17 @@ class RecipesController < ApplicationController
 
   def update
     @recipe = Recipe.find(params[:id])
-
     if @recipe.update_attributes(params[:recipe])
       redirect_to @recipe, notice: 'Recipe was successfully updated.'
     else
-      render action: "edit"
+      render :edit
     end
   end
 
   def destroy
     @recipe = Recipe.find(params[:id])
     @recipe.destroy
+
+    redirect_to recipes_url, notice: "Successfully destroyed survey."
   end
 end

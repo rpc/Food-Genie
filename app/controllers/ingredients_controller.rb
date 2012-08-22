@@ -43,6 +43,6 @@ class IngredientsController < ApplicationController
     @ingredient = Ingredient.find(params[:id])
     @ingredient.destroy
 
-    #redirect_to recipes_path
+    
   end
 end

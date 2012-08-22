@@ -11,6 +11,6 @@ Foodgenie::Application.routes.draw do
   resources :food_items, :collection => {:formatted => [:get, :post]}
 
   # Default root
-  root :to => 'genie_search_forms#new'  
+  root to: 'genie_search_forms#new'  
 
 end

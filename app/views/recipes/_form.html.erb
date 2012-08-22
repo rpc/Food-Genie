@@ -1,4 +1,4 @@
-<%= form_for(@recipe) do |f| %>
+<%= form_for @recipe do |f| %>
   <% if @recipe.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@recipe.errors.count, "error") %> prohibited this recipe from being saved:</h2>
@@ -36,21 +36,14 @@
     <%= f.label :text %><br />
     <%= f.text_area :text, {:cols => 60, :rows => 10} %>
   </div>
-  <!--<div class="field">
-    <%#= f.label :extra_content %><br />
-    <%#= f.text_field :extra_content %>
-  </div>-->
-  
-  <table>
-  <% @recipe.ingredients.each do |ingredient| %>
-  <tr>
-    <td><%= collection_select :ingredient, :food_item_id, FoodItem.all, :id, :name, :selected => ingredient.food_item.id %></td>
-    <td><%= text_field :ingredient, :category_id, :value => ingredient.quantity %></td>
-    <td><%= link_to "Destroy", ingredient, :remote => true, :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
-  
-<% end %>
-  </table>
+
+
+  <%= f.fields_for :ingredients do |builder| %>
+    <%= render 'ingredient_fields', f: builder %>
+  <% end %>
+
+  <%= link_to_add_fields "Add Ingredientss", f, :ingredients %>
+
   <div class="actions">
     <%= f.submit %>
   </div>

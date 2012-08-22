@@ -33,7 +33,7 @@
   </div>
   
   <div class="form-wrapper">
-    <div id="search"><%= autocomplete_field :ingredient, :food_item_name,  food_items_path, :placeholder => "text"%></div>
+    <div id="search"><%= text_field :search, :search_text, :placeholder => "text"%></div>
     <div id="submit"><%= submit_tag "go", :name => nil %></div>
   </div>  
 

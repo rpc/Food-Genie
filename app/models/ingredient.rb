@@ -1,9 +1,14 @@
 class Ingredient < ActiveRecord::Base
+
+  attr_accessible :food_item_id, :quantity, :measure, :recipe_id, :food_item_attributes
+
   belongs_to :food_item
   belongs_to :recipe
   
   before_save :do_not_repeat_food_item
-  after_destroy :destroy_associated_food_items  
+  after_destroy :destroy_associated_food_items
+
+  accepts_nested_attributes_for :food_item, allow_destroy: true
   
   def do_not_repeat_food_item
     # If the inserted FoodItem already exists, gets that one.

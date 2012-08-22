@@ -2,10 +2,8 @@ source 'http://rubygems.org'
 
 gem 'rails', '~> 3.2.0'
 gem 'therubyracer'
-gem 'rails3-jquery-autocomplete'
-gem 'jquery-rails'
-gem 'prototype-rails'
-gem 'jquery-rails'
+
+#gem "nested_form"
 
 group :development do
   #gem 'ruby-debug19'
@@ -38,4 +36,6 @@ group :assets do
   gem 'coffee-rails', '~> 3.2.1'
   gem 'uglifier', '>= 1.0.3'
 end
+
+gem 'jquery-rails'
 
