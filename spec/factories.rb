@@ -11,7 +11,7 @@ FactoryGirl.define do
 
   factory :recipe do
     sequence(:title) { |n| "MyRecipe#{n}" }
-    difficulty '3'
+    effort_id '3'
     time '25'
     association :category
     sequence(:text) { |n| "Mix it all together for recipe #{n}" }
@@ -24,6 +24,3 @@ FactoryGirl.define do
     association :recipe
   end
 end
-
-
-

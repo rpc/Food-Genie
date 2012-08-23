@@ -11,7 +11,7 @@ class Recipe < ActiveRecord::Base
   validates_uniqueness_of :title
   
   validates_presence_of :title
-  validates_presence_of :difficulty
+  validates_presence_of :effort_id
   validates_presence_of :time
   validates_presence_of :category_id  
   

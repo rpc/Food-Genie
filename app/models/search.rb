@@ -33,7 +33,7 @@ class Search
 		# Ingredient Options
 		recipe_query = recipe_query.where(:category_id => self.category)
   	recipe_query = recipe_query.where("time <= ?",self.time)
-  	recipe_query = recipe_query.where("difficulty <= ?",self.difficulty)
+  	recipe_query = recipe_query.where("effort_id <= ?",self.difficulty)
     
     # Ingredients Filter
     ingredient_or_query = build_query_with_or("name",result_set)

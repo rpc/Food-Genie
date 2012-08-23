@@ -1,10 +1,10 @@
 ENV["RAILS_ENV"] = "test"
 require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
-require 'factory_girl'
+#require 'factory_girl'
 
 # Autoloading of Factories seems to be broken, so manually require the factories.rb file
-require File.dirname(__FILE__) + "/../test/factory/factories.rb"
+#require File.dirname(__FILE__) + "/../test/factory/factories.rb"
   
 class ActiveSupport::TestCase
   # Setup all fixtures in test/fixtures/*.(yml|csv) for all tests in alphabetical order.

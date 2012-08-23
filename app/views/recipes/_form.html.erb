@@ -21,8 +21,8 @@
     <%= f.text_field :title %>
   </div>
   <div class="field">
-    <%= f.label :difficulty %><br />
-    <%= f.text_field :difficulty %>
+    <%= f.label :effort_id %><br />
+    <%= f.text_field :effort_id %>
   </div>
   <div class="field">
     <%= f.label :time %><br />
@@ -30,7 +30,8 @@
   </div>
   <div class="field">
     <%= f.label :category_id %><br />
-    <%= f.text_field :category_id %>
+    <%= f.collection_select :category_id, Category.all, :id, :name %>
+
   </div>
   <div class="field">
     <%= f.label :text %><br />
@@ -38,7 +39,7 @@
   </div>
 
   <%= f.fields_for :ingredients %>
-  <p><%= f.link_to_add "Add a ingredient", :ingredients %></p>
+  <p><%= f.link_to_add "Add Ingredient", :ingredients %></p>
 
   <div class="actions">
     <%= f.submit %>

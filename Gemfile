@@ -4,6 +4,9 @@ gem 'rails', '~> 3.2.0'
 gem 'therubyracer'
 gem "nested_form"
 
+gem "rspec-rails", :group => [:test, :development]
+gem 'capybara-webkit'
+
 group :development do
   #gem 'ruby-debug19'
   gem 'sqlite3'
@@ -23,11 +26,13 @@ end
 group :test do
   # Pretty printed test output
   gem 'turn'
-  gem 'factory_girl'
+  gem 'factory_girl_rails'
   gem 'minitest'
   gem 'mocha'
   gem 'selenium-webdriver'
   gem 'capybara'  
+  gem 'launchy'
+  gem "guard-rspec"
 end
 
 group :assets do

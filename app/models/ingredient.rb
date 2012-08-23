@@ -6,6 +6,7 @@ class Ingredient < ActiveRecord::Base
   belongs_to :recipe
   
   before_save :do_not_repeat_food_item
+  before_create :do_not_repeat_food_item
   after_destroy :destroy_associated_food_items
 
   accepts_nested_attributes_for :food_item, allow_destroy: true

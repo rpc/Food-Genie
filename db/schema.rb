@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120820142155) do
+ActiveRecord::Schema.define(:version => 20120823141051) do
 
   create_table "blender_forms", :force => true do |t|
     t.datetime "created_at", :null => false
@@ -34,6 +34,12 @@ ActiveRecord::Schema.define(:version => 20120820142155) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "efforts", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "food_items", :force => true do |t|
@@ -61,7 +67,7 @@ ActiveRecord::Schema.define(:version => 20120820142155) do
   create_table "recipes", :force => true do |t|
     t.integer  "many_ppl"
     t.string   "title"
-    t.integer  "difficulty",    :limit => 255
+    t.integer  "effort_id",     :limit => 255
     t.integer  "time"
     t.integer  "category_id"
     t.string   "text"
