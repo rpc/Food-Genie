@@ -3,12 +3,11 @@ source 'http://rubygems.org'
 gem 'rails', '~> 3.2.0'
 gem 'therubyracer'
 gem "nested_form"
+gem 'jquery-rails'
 
 gem "rspec-rails", :group => [:test, :development]
-gem 'capybara-webkit'
 
 group :development do
-  #gem 'ruby-debug19'
   gem 'sqlite3'
   gem 'mongrel', '~> 1.2.0.pre2'
   gem 'debugger'
@@ -33,6 +32,7 @@ group :test do
   gem 'capybara'  
   gem 'launchy'
   gem "guard-rspec"
+  gem 'capybara-webkit'
 end
 
 group :assets do
@@ -41,5 +41,5 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 end
 
-gem 'jquery-rails'
+
 

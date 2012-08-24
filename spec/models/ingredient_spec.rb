@@ -8,18 +8,26 @@ describe Ingredient do
     fiambre = FactoryGirl.build(:food_item, :name => "fiambre")
 
     food_item_count_before_new_ingredient = FoodItem.count
-    
-    # Has to be .new, before_save doesnt work with factory
-    ingredient = Ingredient.new(:quantity => "2", :measure => "1", :food_item => fiambre)
-    ingredient.save
+
+    ingredient = FactoryGirl.create(:ingredient, :food_item => fiambre)
+
     ingredient.should be_valid
 
+    # No change
     assert (food_item_count_before_new_ingredient == FoodItem.count)
   end
   
-  it "should not create create food_items without a name" do
-    fiambre = FoodItem.new
-    #FactoryGirl.create(:ingredient, :food_item => fiambre).should be_valid
+  it "should create a new food item if it does not exist" do
+
+    food_item = FactoryGirl.build(:food_item, :name => "queijo")
+    food_item.should be_valid
+
+    food_item_count_before_new_ingredient = FoodItem.count
+
+    ingredient = FactoryGirl.create(:ingredient, :food_item => food_item)
+
+    ingredient.should be_valid
+    assert(FoodItem.count > food_item_count_before_new_ingredient && FoodItem.last.name == food_item.name )
   end	
 
 end

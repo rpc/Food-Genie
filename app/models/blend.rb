@@ -4,7 +4,7 @@ class Blender < ActiveRecord::Base
   MEASURE_WORDS = ["colheres","pacote","quarts","teaspoon","cups","tablespoons"]
   PLAUSIBLE_MEASURE_SIZE = 4
   
-  validates_presence_of :difficulty, :message => "Please choose the difficulty"
+  validates_presence_of :effort_id, :message => "Please choose the difficulty"
   validates_presence_of :time, :message => "Choose the cooking time"
   validates_presence_of :category, :message => "Choose the food category"
   validates_presence_of :many_ppl, :message => "Choose how many ppl"
@@ -24,7 +24,7 @@ class Blender < ActiveRecord::Base
     
     recipe = Recipe.new(:many_ppl => self.many_ppl,
                            :title => self.title, 
-                           :difficulty => self.difficulty, 
+                           :effort_id => self.effort_id, 
                            :time => self.time, 
                            :category_id => self.category, 
                            :text => self.blending_text, 

@@ -13,27 +13,10 @@
 
 ActiveRecord::Schema.define(:version => 20120823141051) do
 
-  create_table "blender_forms", :force => true do |t|
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
-  create_table "blenders", :force => true do |t|
-    t.string   "difficulty"
-    t.integer  "time"
-    t.integer  "category"
-    t.integer  "many_ppl"
-    t.string   "title"
-    t.string   "blending_ingredients"
-    t.string   "blending_text"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "categories", :force => true do |t|
     t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "efforts", :force => true do |t|
@@ -46,13 +29,8 @@ ActiveRecord::Schema.define(:version => 20120823141051) do
     t.string   "name"
     t.decimal  "price"
     t.boolean  "certified",  :default => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "genie_search_forms", :force => true do |t|
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
   end
 
   create_table "ingredients", :force => true do |t|
@@ -60,8 +38,8 @@ ActiveRecord::Schema.define(:version => 20120823141051) do
     t.string   "quantity"
     t.string   "measure"
     t.integer  "recipe_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
 
   create_table "recipes", :force => true do |t|
@@ -73,20 +51,8 @@ ActiveRecord::Schema.define(:version => 20120823141051) do
     t.string   "text"
     t.boolean  "approved"
     t.binary   "extra_content"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "watchers", :force => true do |t|
-    t.string   "query"
-    t.integer  "time"
-    t.string   "difficulty"
-    t.string   "category"
-    t.integer  "many_ppl"
-    t.string   "action"
-    t.string   "who"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
   end
 
 end

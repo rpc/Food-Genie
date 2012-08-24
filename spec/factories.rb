@@ -4,8 +4,8 @@ FactoryGirl.define do
   end
 
   factory :food_item do
-    sequence(:name) { |n| "ingredient#{n}" }
-    price '#{rand(100)}.#{rand(10)}'
+    sequence(:name) { |n| "item#{n}" }
+    price Random.rand(100)
     certified false
   end
 

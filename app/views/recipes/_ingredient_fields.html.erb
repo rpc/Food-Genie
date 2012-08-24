@@ -1,14 +1,11 @@
 <div>
 	<fieldset>
-		<%= f.label :quantity, "Quantidade" %><br />
+		<%= f.fields_for :food_item %>
+		<%= f.label :quantity, "Quantity" %><br />
 		<%= f.text_field :quantity %><br />
-		<%= f.label :measure, "Medida" %><br />
+		<%= f.label :measure, "Measure/Units" %><br />
 		<%= f.text_field :measure %><br />
-
+		<p><%= f.link_to_add "Add Item", :food_item %></p>
 		<%= f.link_to_remove "Remove this ingredient" %>
-
-		<%= f.fields_for :food_item do |builder| %>
-		<%= render 'food_item_fields', f: builder %>
-		<% end %>
 	</fieldset>
 </div>

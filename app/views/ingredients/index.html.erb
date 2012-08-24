@@ -11,7 +11,7 @@
 
 <% @ingredients.each do |ingredient| %>
   <tr>
-    <td><%= ingredient.food_item.name %></td>
+    <td><%= ingredient.food_item_id %></td>
     <td><%= ingredient.quantity %></td>
     <td><%= link_to 'Show', ingredient %></td>
     <td><%= link_to 'Edit', edit_ingredient_path(ingredient) %></td>
