@@ -23,9 +23,6 @@ class Recipe < ActiveRecord::Base
       matched_percent = 100 if matched_percent > 100
     end
     return matched_percent
-  end
-
-  
- 
+  end 
   
 end

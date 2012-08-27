@@ -2,7 +2,7 @@ source 'http://rubygems.org'
 
 gem 'rails', '~> 3.2.0'
 gem 'therubyracer'
-gem "nested_form"
+gem 'nested_form'
 gem 'jquery-rails'
 
 gem "rspec-rails", :group => [:test, :development]

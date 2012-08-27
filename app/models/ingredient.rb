@@ -27,5 +27,9 @@ class Ingredient < ActiveRecord::Base
   def food_item_name
     food_item.try(:name)
   end
+
+  def pretty_print
+    return "#{quantity} #{measure} #{food_item.name}"
+  end
   
 end

@@ -9,7 +9,7 @@
 
 <!--- END -->
 
-<% if @blender_form.errors.any? %>
+<% if @blender_form.errors.any? || (!@recipe.nil? && @recipe.errors.any?) %>
     <div id="error_explanation">
       <h2><%= pluralize(@blender_form.errors.count, "error") %> prohibited this blender from being saved:</h2>
 
@@ -17,9 +17,9 @@
       <% @blender_form.errors.values.each do |msg| %>
         <li><%= msg.first %></li>
       <% end %>
-      <%# @blender_form.recipe.errors.full_messages.each do |msg| %>
-        <li><%#= msg %></li>
-      <%# end %>
+      <% @recipe.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
       </ul>
     </div>
 <% end %>
@@ -51,11 +51,9 @@
     <div class="twoColunms">
       <div class="cols", style="padding-left: " >
         <h2>How hard is it?</h2><br class="clear">
-        <div class="align_options">        
-          <p>easy</p><%= f.radio_button :effort_id, "easy", :checked => true%>
-          <p>medium</p><%= f.radio_button :effort_id, "medium" %>
-          <p>hardcore</p><%= f.radio_button :effort_id, "hardcore" %>
-        </div>          
+        <div class="align_options"> 
+            <%= f.collection_select :effort, Effort.all, :id, :name %><br class="clear">
+          </div>        
       </div>
       <div class="cols" >
         <h2>Category</h2><br class="clear">
@@ -65,10 +63,11 @@
       </div>      
     </div>    
     <br class="clear">
-</div>
-<div id="blender_outBox">
+    <div id="blender_outBox">
   <%= f.submit "Blend", :class => "go" %>
 <div>
+</div>
+
 <% end %>
    
 

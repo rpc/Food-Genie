@@ -5,10 +5,10 @@ class BlenderForm
   extend ActiveModel::Naming
 
 	attr_accessor :title
-  attr_accessor :effort_id, :time, :category, :many_ppl
+  attr_accessor :effort, :time, :category, :many_ppl
   attr_accessor :blending_ingredients, :blending_text
 
-  validates_presence_of :effort_id, 	:message => "Please choose a difficulty"
+  validates_presence_of :effort, 	    :message => "Please choose a difficulty"
   validates_presence_of :time, 				:message => "Choose the cooking time"
   validates_presence_of :category, 		:message => "Choose a food category"
   validates_presence_of :many_ppl, 		:message => "Choose the number of eaters"

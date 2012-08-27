@@ -4,22 +4,22 @@ class BlenderFormsController < ApplicationController
     redirect_to :new
   end
 
-  def show
-  end
-
   def new
     @blender_form = BlenderForm.new
   end
 
   def create
     @blender_form = BlenderForm.new(params[:blender_form])
-    #recipe = @blender.blend
-    
-    #Rails.logger.debug "* Recipe from BLENDER: #{@blender.inspect}"
-    
-    if @blender_form.valid? #&& recipe.save
-      #redirect_to recipe, :notice => 'Recipe was blended successfully.' 
-      put "ada"
+   
+    if @blender_form.valid?
+      blender = Blender.new(@blender_form)
+      @recipe = blender.blend
+
+      if @recipe.save        
+        redirect_to edit_recipe_path(@recipe), :notice => 'This what your recipe will look like, please check it :)'
+      else
+        render :new
+      end
     else
       render :new
     end  

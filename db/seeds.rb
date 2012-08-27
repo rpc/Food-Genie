@@ -9,12 +9,15 @@
 ###################
 # Categoria
 ###################
-Category.create(:name => "Dessert")
-Category.create(:name => "Dish")
-Category.create(:name => "Soup")
-Category.create(:name => "Appetizer")
-Category.create(:name => "Beverage")
-Category.create(:name => "Sandwiche")
-Category.create(:name => "Breakfast & Brunch")
+Category.create(name: "Dessert")
+Category.create(name: "Dish")
+Category.create(name: "Soup")
+Category.create(name: "Appetizer")
+Category.create(name: "Beverage")
+Category.create(name: "Sandwiche")
+Category.create(name: "Breakfast & Brunch")
 
+Effort.create(name: "easy") 
+Effort.create(name: "medium") 
+Effort.create(name: "hard") 
 
