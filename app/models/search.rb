@@ -1,12 +1,22 @@
 class Search
 
-	def preform_search search_field
+  attr_accessor :effort_id, :time, :category, :search_field
+
+  def initialize(attributes = {})
+    
+    attributes.each do |name, value|
+      send("#{name}=", value)
+    end
+  end
+
+	def preform_search
+
 		Rails.logger.debug "** Search::PreformSearch"
-		Rails.logger.debug "* search_field: #{search_field.inspect}"
+		Rails.logger.debug "* search_field: #{search_field}"
 		result_find = []
 
 		# Searches unless search_field is blank/nil OR the search_options are invalid.
-    unless search_field.blank? or !errors.blank? 
+    unless search_field.blank?
       result_set = parse_entry_string search_field.downcase
       result_find = find_in_result_set result_set
     end

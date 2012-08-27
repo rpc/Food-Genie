@@ -1,8 +1,7 @@
 <h1>Result</h1>
 </br>
-<% @result_find.each do |match, recipes| %>
+<% @result.each do |match, recipes| %>
     <% recipes.each do |recipe| %>
       <%= render :partial => "single_recipe", :locals => {:recipe => recipe, :match => match} %>  
     <%  end %>
 <% end %>
-

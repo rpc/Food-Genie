@@ -16,7 +16,7 @@
 
   <div>
     easy<%= f.radio_button :effort_id, 1 %>
-    medium<%= f.radio_button :effort_id, 2 %>
+    medium<%= f.radio_button :effort_id, 2, :checked => true %>
     hard<%= f.radio_button :effort_id, 3 %>
   </div>
 
@@ -33,7 +33,7 @@
   </div>
   
   <div class="form-wrapper">
-    <div id="search"><%= text_field :search, :search_text, :placeholder => "text"%></div>
+    <div id="search"><%= f.text_field :search_field, :placeholder => "text"%></div>
     <div id="submit"><%= submit_tag "go", :name => nil %></div>
   </div>  
 
